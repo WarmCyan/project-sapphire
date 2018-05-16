@@ -10,8 +10,8 @@ Sources in _italics_ don't yet have scrapers written
 ## RSS sources
 
 * **Reuters** [All RSS feeds](https://www.reuters.com/tools/rss)
-* _Bloomberg_
-	* _[https://www.bloomberg.com/politics/feeds/site.xml](https://www.bloomberg.com/politics/feeds/site.xml)_
+* **Bloomberg**
+	* _Politics_ [https://www.bloomberg.com/politics/feeds/site.xml](https://www.bloomberg.com/politics/feeds/site.xml)
 * _NPR_
 
 ## Twitter sources
