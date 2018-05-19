@@ -13,6 +13,7 @@ metadata_queue_dir = ""
 metadata_store = ""
 
 
+# datetime format directives from https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
 
 def readConfig(config):
     global feed_scrape_raw_tmp_dir
@@ -35,6 +36,9 @@ def writeConfig():
 def _getFormattedTimestamp(dt):
     return dt.strftime("%Y-%m-%d %H:%M:%S")
 
+def _getFileFormattedTimestamp(dt):
+    return dt.strftime("%Y.%m.%d_%H.%M.%S")
+
 def _getUTCTime(dt):
     dt = dt.astimezone(timezone('UTC'))
     return dt
@@ -43,6 +47,9 @@ def _getUTCTime(dt):
 # CALL THESE
 def getTimestamp(dt):
     return _getFormattedTimestamp(_getUTCTime(dt))
+
+def getFileTimeStamp(dt):
+    return _getFileFormattedTimestamp(_getUTCTime(dt))
 
 #def getCurrentTimestamp():
     #return getCorrectTimestamp(datetime.datetime.now())
