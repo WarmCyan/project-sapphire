@@ -1,12 +1,16 @@
 import sapphire.utility
 
 from sapphire.scrapers import reuters
+from sapphire.utility.logging import registerLogger, ConsoleLogger
 
-print("hi")
+print("--------------------------------------------------")
 sapphire.utility.readConfig("config.json")
-print(sapphire.utility.feed_scrape_raw_tmp_dir)
+
+
+cl = ConsoleLogger({"[ALL]":{}})
+registerLogger(cl)
 
 
 scraper = reuters.RSSScraper()
-scraper.scrape()
-print("Done")
+scraper.run()
+print("==================================================")

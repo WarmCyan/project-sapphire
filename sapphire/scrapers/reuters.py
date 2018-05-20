@@ -2,7 +2,7 @@
 #
 #  File: reuters.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 05/19/2018
+#  Date edited: 05/20/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -24,21 +24,29 @@ class RSSScraper:
     def __init__(self):
         pass
 
+    def log(self, msg, channel=""):
+        sapphire.utility.logging.log(msg, channel, source="Scraper::Reuters")
+
     def scrape(self):
         url = "http://feeds.reuters.com/Reuters/worldNews" # TODO: temp
 
         # scrape the RSS from the url
+        self.log("Scraping '" + url + "' feed...")
         request = urllib.request.Request(url)
         response = urllib.request.urlopen(request)
         page = response.read().decode('utf-8')
 
         scrape_time_dt = datetime.datetime.now()
         scrape_time = sapphire.utility.getTimestamp(scrape_time_dt)
+        self.log("Feed scraping complete")
         
         # store the scrape
         filename = sapphire.utility.getFileTimeStamp(scrape_time_dt) + "_reuters_testscrape.xml" # TODO: or reverse order?
-        with open(sapphire.utility.feed_scrape_raw_tmp_dir + "/" + filename, 'w') as f:
+        self.log("Storing raw scrape in '" + filename + "'...")
+        with open(sapphire.utility.feed_scrape_raw_dir + "/" + filename, 'w') as f:
             f.write(page)
+        self.log("File saved")
+        
 
     def extract(self, page):
         pass
@@ -47,11 +55,12 @@ class RSSScraper:
     # NOTE: make this "run" instead, and have scrape versus extract/parse separate functions?
     def run(self):
 
+        self.scrape()
 
 
 
 
-
+        '''
 
         #print(sapphire.utility.feed_scrape_raw_tmp_dir) # TODO: debug
 
@@ -99,5 +108,6 @@ class RSSScraper:
 
             article_heads.append(article)
 
+        '''
 
 
