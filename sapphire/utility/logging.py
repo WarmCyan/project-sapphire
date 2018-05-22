@@ -1,8 +1,8 @@
 #***************************************************************************
 #
-#  File: logging.py
+#  File: logging.py (sapphire.utility)
 #  Date created: 05/20/2018
-#  Date edited: 05/20/2018
+#  Date edited: 05/22/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs

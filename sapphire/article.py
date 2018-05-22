@@ -1,6 +1,6 @@
 #***************************************************************************
 #
-#  File: article.py
+#  File: article.py (sapphire)
 #  Date created: 05/22/2018
 #  Date edited: 05/22/2018
 #
