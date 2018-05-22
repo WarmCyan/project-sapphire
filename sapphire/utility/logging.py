@@ -59,6 +59,6 @@ class ConsoleLogger:
 
         if messageSettings != None:
             # TODO: add color and prepend settings handler
-            timeStr = msg.dt.strftime("%Y-%m-%d::%H:%M:%S:%f")
+            timeStr = msg.dt.strftime("%Y-%m-%d::%H:%M:%S.%f")
             messageString = "[" + timeStr + "]:: " + msg.msg
             print(messageString)
