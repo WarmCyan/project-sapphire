@@ -1,8 +1,8 @@
 #***************************************************************************
 #
-#  File: reuters.py (sapphire.scrapers)
+#  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 05/22/2018
+#  Date edited: 05/23/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -21,6 +21,16 @@ from sapphire.article import Article
 
 
 class RSSScraper:
+
+    VERSION = 1
+
+    url_business = "http://feeds.reuters.com/reuters/businessNews"
+    url_companynews = "http://feeds.reuters.com/reuters/companyNews"
+    url_entertainment = "http://feeds.reuters.com/reuters/entertainment"
+    url_environment = "http://feeds.reuters.com/reuters/environment"
+    url_healthnews = "http://feeds.reuters.com/reuters/healthNews"
+    url_mostread = "http://feeds.reuters.com/reuters/MostRead"
+    #url_
 
     def __init__(self):
         self.url = "http://feeds.reuters.com/Reuters/worldNews" # TODO: temp
