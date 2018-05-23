@@ -5,13 +5,24 @@ News aggregation, statistics, analysis, and dashboard system
 
 # Sources
 
-Sources in _italics_ don't yet have scrapers written
-
 ## RSS sources
 
 * **Reuters** [All RSS feeds](https://www.reuters.com/tools/rss)
+	* Business
+	* Company News
+	* Entertainment
+	* Environment
+	* Health News
+	* Most Read Articles (may remove)
+	* People
+	* Politics
+	* Science
+	* Technology
+	* Top News
+	* US News
+	* World News
 * **Bloomberg**
 	* _Politics_ [https://www.bloomberg.com/politics/feeds/site.xml](https://www.bloomberg.com/politics/feeds/site.xml)
-* _NPR_
+* **NPR**
 
 ## Twitter sources
