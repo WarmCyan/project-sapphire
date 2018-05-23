@@ -7,7 +7,7 @@ print("--------------------------------------------------")
 sapphire.utility.readConfig("config.json")
 
 
-cl = ConsoleLogger({"[ALL]":{}})
+cl = ConsoleLogger({"[ALL]":{}, "DEBUG":{"color":"yellow", "prepend":"DEBUG :: "}})
 registerLogger(cl)
 
 

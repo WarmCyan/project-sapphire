@@ -2,7 +2,7 @@
 #
 #  File: logging.py (sapphire.utility)
 #  Date created: 05/20/2018
-#  Date edited: 05/22/2018
+#  Date edited: 05/23/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -12,6 +12,7 @@
 #***************************************************************************
 
 import datetime
+import pycolor
 
 registeredLoggers = []
 
@@ -47,6 +48,9 @@ class ConsoleLogger:
         self.sourceAssociations = sourceAssociations
 
     def log(self, msg):
+
+        messageString = ""
+        
         localAssociations = self.channelAssociations
         if msg.source in self.sourceAssociations:
             localAssociations = self.sourceAssociations[msg.source]
@@ -58,7 +62,15 @@ class ConsoleLogger:
             messageSettings = localAssociations["[ALL]"]
 
         if messageSettings != None:
-            # TODO: add color and prepend settings handler
             timeStr = msg.dt.strftime("%Y-%m-%d::%H:%M:%S.%f")
-            messageString = "[" + timeStr + "]:: " + msg.msg
+            if "color" in messageSettings:
+                if messageSettings["color"] == "yellow":
+                    messageString += pycolor.YELLOW
+                
+            messageString += "[" + timeStr + "]:: " 
+
+            if "prepend" in messageSettings:
+                messageString += messageSettings["prepend"]
+            
+            messageString += msg.msg + pycolor.RESET
             print(messageString)
