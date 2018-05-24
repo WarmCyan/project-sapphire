@@ -2,7 +2,7 @@
 #
 #  File: logging.py (sapphire.utility)
 #  Date created: 05/20/2018
-#  Date edited: 05/23/2018
+#  Date edited: 05/24/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -43,9 +43,11 @@ class LogMessage:
 
 class ConsoleLogger:
 
-    def __init__(self, channelAssociations={}, sourceAssociations={}):
+    def __init__(self, channelAssociations={}, sourceAssociations={}, prependChannel=False, prependSource=False):
         self.channelAssociations = channelAssociations
         self.sourceAssociations = sourceAssociations
+        self.prependChannel = prependChannel
+        self.prependSource = prependSource
 
     def log(self, msg):
 
@@ -62,15 +64,22 @@ class ConsoleLogger:
             messageSettings = localAssociations["[ALL]"]
 
         if messageSettings != None:
-            timeStr = msg.dt.strftime("%Y-%m-%d::%H:%M:%S.%f")
+            timeStr = msg.dt.strftime("%Y-%m-%d %H:%M:%S.%f")
             if "color" in messageSettings:
                 if messageSettings["color"] == "yellow":
                     messageString += pycolor.YELLOW
+                elif messageSettings["color"] == "white":
+                    messageString += pycolor.WHITE
                 
-            messageString += "[" + timeStr + "]:: " 
+            messageString += "[" + timeStr + "] :: " 
+            
+            # source prepend
+            if (("prependSource" in messageSettings and messageSettings["prependSource"] == True) or ("prependSource" not in messageSettings and self.prependSource == True)) and msg.source != "":
+                messageString += msg.source + " :: "
 
-            if "prepend" in messageSettings:
-                messageString += messageSettings["prepend"]
+            # channel prepend
+            if (("prependChannel" in messageSettings and messageSettings["prependChannel"] == True) or ("prependChannel" not in messageSettings and self.prependChannel == True)) and msg.channel != "":
+                messageString += msg.channel + " - "
             
             messageString += msg.msg + pycolor.RESET
             print(messageString)

@@ -2,7 +2,7 @@
 #
 #  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 05/23/2018
+#  Date edited: 05/24/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -22,21 +22,48 @@ from sapphire.article import Article
 
 class RSSScraper:
 
-    VERSION = 1
+    SOURCE = "reuters"
+    TYPE = "rss"
+    VERSION = "v1"
 
-    url_business = "http://feeds.reuters.com/reuters/businessNews"
-    url_companynews = "http://feeds.reuters.com/reuters/companyNews"
-    url_entertainment = "http://feeds.reuters.com/reuters/entertainment"
-    url_environment = "http://feeds.reuters.com/reuters/environment"
-    url_healthnews = "http://feeds.reuters.com/reuters/healthNews"
-    url_mostread = "http://feeds.reuters.com/reuters/MostRead"
-    #url_
+    subfeeds = {
+        "business": "http://feeds.reuters.com/reuters/businessNews",
+        "companynews": "http://feeds.reuters.com/reuters/companyNews",
+        "entertainment": "http://feeds.reuters.com/reuters/entertainment",
+        "environment": "http://feeds.reuters.com/reuters/environment",
+        "healthnews": "http://feeds.reuters.com/reuters/healthNews",
+        "mostread": "http://feeds.reuters.com/reuters/MostRead",
+        "people": "http://feeds.reuters.com/reuters/peopleNews",
+        "politics": "http://feeds.reuters.com/Reuters/PoliticsNews",
+        "science": "http://feeds.reuters.com/reuters/scienceNews",
+        "technology": "http://feeds.reuters.com/reuters/technologyNews",
+        "topnews": "http://feeds.reuters.com/reuters/topNews",
+        "usnews": "http://feeds.reuters.com/Reuters/domesticNews",
+        "worldnews": "http://feeds.reuters.com/Reuters/worldNews"
+    }
 
     def __init__(self):
-        self.url = "http://feeds.reuters.com/Reuters/worldNews" # TODO: temp
+        self.url = "" 
+        self.feed = ""
+        self.page = None # NOTE: the raw html from the scrape
+        self.scrape_time = None
+        self.articles = []
+        
+    def run(self, subfeed):
+        self.subfeed = subfeed
+        self.url = self.subfeeds[subfeed]
+        
+        self.scrape()
+        self.extract()
+        return self.articles
+
+    def getSubfeeds(self): return subfeeds
+    def getIdentifier(self): return self.SOURCE + "_" + self.TYPE + "_" + self.VERSION
+
+
 
     def log(self, msg, channel=""):
-        sapphire.utility.logging.log(msg, channel, source="Scraper::Reuters")
+        sapphire.utility.logging.log(msg, channel, source=self.getIdentifier())
 
     # NOTE: returns the html
     def scrape(self):
@@ -45,23 +72,24 @@ class RSSScraper:
         request = urllib.request.Request(self.url)
         response = urllib.request.urlopen(request)
         page = response.read().decode('utf-8')
+        self.page = page
 
+        # get time of the scrape
         scrape_time_dt = datetime.datetime.now()
         scrape_time = sapphire.utility.getTimestamp(scrape_time_dt)
+        self.scrape_time = scrape_time
         self.log("Feed scraping complete")
         
         # store the scrape
-        filename = sapphire.utility.getFileTimeStamp(scrape_time_dt) + "_reuters_testscrape.xml" # TODO: or reverse order?
+        filename = sapphire.utility.getFileTimeStamp(scrape_time_dt) + "_" + self.getIdentifier() + "_" + self.subfeed + ".xml"
         self.log("Storing raw scrape in '" + filename + "'...")
         with open(sapphire.utility.feed_scrape_raw_dir + "/" + filename, 'w') as f:
             f.write(page)
         self.log("File saved")
-
-        return page, scrape_time
         
-    def extract(self, page, scrape_time):
+    def extract(self):
         self.log("Parsing scrape for items...")
-        soup = BeautifulSoup(page, "xml") # NOTE: uses lxml-xml (is this available in apt repos for a pi?)
+        soup = BeautifulSoup(self.page, "xml") # NOTE: uses lxml-xml (is this available in apt repos for a pi?)
                 
         items = soup.find_all('item')
         articles = []
@@ -83,97 +111,5 @@ class RSSScraper:
             articles.append(article)
 
         self.log("Finished parsing scrape")
-        return articles
-            
-
-        
-        '''
-        article_items = []
-        for item in items:
-            timestamp = datetime.datetime.strptime(item.pubDate.text, "%a, %d %b %Y %H:%M:%S %z")
-
-            # TODO: make this a class?
-            article = { 
-                    "title": item.title.text,
-                    "description": item.description.text,
-                    #"timestamp": timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-                    "timestamp": sapphire.utility.getTimestamp(timestamp),
-                    "link": item.origLink.text,
-
-
-                    "source": "reuters",
-                    "source_type": "rss",
-                    "source_sub": "WorldNews",
-                    "source_explicit": url,
-                    "scraped": scrape_time,
-
-                    "other": { "category": item.category.text }
-                    }
-
-            article_heads.append(article)
-
-    
-        pass
-        '''
-
-    # TODO: returns JSON
-    # NOTE: make this "run" instead, and have scrape versus extract/parse separate functions?
-    def run(self):
-
-        page, time = self.scrape()
-        articles = self.extract(page, time)
-
-
-
-
-        '''
-
-        #print(sapphire.utility.feed_scrape_raw_tmp_dir) # TODO: debug
-
-        url = "http://feeds.reuters.com/Reuters/worldNews" # TODO: temp
-
-        # scrape the RSS from the url
-        request = urllib.request.Request(url)
-        response = urllib.request.urlopen(request)
-        page = response.read().decode('utf-8')
-
-        scrape_time_dt = datetime.datetime.now()
-        scrape_time = sapphire.utility.getTimestamp(scrape_time_dt)
-
-        # store the scrape
-        filename = sapphire.utility.getFileTimeStamp(scrape_time_dt) + "_reuters_testscrape.xml" # TODO: or reverse order?
-        with open(sapphire.utility.feed_scrape_raw_tmp_dir + "/" + filename, 'w') as f:
-            f.write(page)
-        
-        # parse the scrape
-        soup = BeautifulSoup(page, "xml") # NOTE: using lxml-xml (is this available in apt repos for a pi?)
-
-        items = soup.find_all('item')
-        
-        article_heads = []
-        for item in items:
-            timestamp = datetime.datetime.strptime(item.pubDate.text, "%a, %d %b %Y %H:%M:%S %z")
-
-            # TODO: make this a class?
-            article = { 
-                    "title": item.title.text,
-                    "description": item.description.text,
-                    #"timestamp": timestamp.strftime("%Y-%m-%d %H:%M:%S"),
-                    "timestamp": sapphire.utility.getTimestamp(timestamp),
-                    "link": item.origLink.text,
-
-
-                    "source": "reuters",
-                    "source_type": "rss",
-                    "source_sub": "WorldNews",
-                    "source_explicit": url,
-                    "scraped": scrape_time,
-
-                    "other": { "category": item.category.text }
-                    }
-
-            article_heads.append(article)
-
-        '''
-
+        self.articles = articles
 
