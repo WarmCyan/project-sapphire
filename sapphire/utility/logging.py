@@ -55,13 +55,18 @@ class ConsoleLogger:
         
         localAssociations = self.channelAssociations
         if msg.source in self.sourceAssociations:
-            localAssociations = self.sourceAssociations[msg.source]
+            localAssociations = self.sourceAssociations
 
         messageSettings = None
-        if msg.channel in localAssociations:
-            messageSettings = localAssociations[msg.channel]
-        elif "[ALL]" in localAssociations:
-            messageSettings = localAssociations["[ALL]"]
+        
+        if msg.source in localAssociations:
+            messageSettings = localAssociations[msg.source]
+        
+        if messageSettings == None:
+            if msg.channel in localAssociations:
+                messageSettings = localAssociations[msg.channel]
+            elif "[ALL]" in localAssociations:
+                messageSettings = localAssociations["[ALL]"]
 
         if messageSettings != None:
             timeStr = msg.dt.strftime("%Y-%m-%d %H:%M:%S.%f")
@@ -70,6 +75,10 @@ class ConsoleLogger:
                     messageString += pycolor.YELLOW
                 elif messageSettings["color"] == "white":
                     messageString += pycolor.WHITE
+                elif messageSettings["color"] == "cyan":
+                    messageString += pycolor.CYAN
+                elif messageSettings["color"] == "brightcyan":
+                    messageString += pycolor.BRIGHTCYAN
                 
             messageString += "[" + timeStr + "] :: " 
             

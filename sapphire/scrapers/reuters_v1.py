@@ -57,7 +57,7 @@ class RSSScraper:
         self.extract()
         return self.articles
 
-    def getSubfeeds(self): return subfeeds
+    def getSubfeeds(self): return self.subfeeds
     def getIdentifier(self): return self.SOURCE + "_" + self.TYPE + "_" + self.VERSION
 
 
@@ -101,7 +101,7 @@ class RSSScraper:
             article.title = item.title.text
             article.description = item.description.text
             article.timestamp = sapphire.utility.getTimestamp(timestamp)
-            article.link = item.origLink.text
+            article.link = item.link.text
             article.source_name = "Reuters"
             article.source_type = "RSS"
             article.source_sub = "World News"

@@ -8,8 +8,14 @@ print("--------------------------------------------------")
 sapphire.utility.readConfig("config.json")
 
 
-cl = ConsoleLogger({"[ALL]":{"color":"white"}, "DEBUG":{"color":"yellow"}}, {}, True, True)
+cl = ConsoleLogger({"[ALL]":{"color":"white"}, "DEBUG":{"color":"yellow"}}, {"RSS Manager":{"color":"brightcyan"}}, True, True)
 registerLogger(cl)
+
+rss_man = RSSManager()
+articles = rss_man.scrapeSource('reuters')
+
+for article in articles:
+    print(article.title)   
 
 
 #scraper = reuters.RSSScraper()

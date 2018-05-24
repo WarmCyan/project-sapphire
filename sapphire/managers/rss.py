@@ -11,6 +11,8 @@
 #
 #***************************************************************************
 
+import time
+
 import sapphire.utility
 
 from sapphire.scrapers import reuters_v1
@@ -41,6 +43,7 @@ class RSSManager:
             self.log("Running " + source + " scraper on subfeed '" + subfeed + "'...")
             newarticles = scraper.run(subfeed)
             articles.extend(newarticles)
+            time.sleep(1)
 
         self.log("All " + source + " RSS subfeeds scraped")
 
@@ -48,6 +51,6 @@ class RSSManager:
 
 
     def log(self, msg, channel=""):
-        sapphire.utility.logging.log(msg, channel, source=self.getIdentifier())
+        sapphire.utility.logging.log(msg, channel, source=self.IDENTIFIER)
         
         
