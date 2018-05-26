@@ -33,3 +33,4 @@ Uses the following python packages:
 * BeautifulSoup (bs4)
 * pycolor
   [https://bitbucket.org/WildfireXIII/libpy-pycolor](https://bitbucket.org/WildfireXIII/libpy-pycolor)
+* Pandas

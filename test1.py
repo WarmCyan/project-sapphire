@@ -5,6 +5,8 @@ from sapphire.managers.rss import RSSManager
 from sapphire.utility.logging import registerLogger, ConsoleLogger
 
 print("--------------------------------------------------")
+print("\tTEST 1 - scraping metadata")
+print("--------------------------------------------------")
 sapphire.utility.readConfig("config.json")
 
 

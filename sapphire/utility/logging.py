@@ -53,9 +53,9 @@ class ConsoleLogger:
 
         messageString = ""
         
-        localAssociations = self.channelAssociations
-        if msg.source in self.sourceAssociations:
-            localAssociations = self.sourceAssociations
+        localAssociations = self.sourceAssociations
+        if msg.channel in self.channelAssociations:
+            localAssociations = self.channelAssociations
 
         messageSettings = None
         
@@ -79,7 +79,9 @@ class ConsoleLogger:
                     messageString += pycolor.CYAN
                 elif messageSettings["color"] == "brightcyan":
                     messageString += pycolor.BRIGHTCYAN
-                
+                elif messageSettings["color"] == "green":
+                    messageString += pycolor.GREEN
+
             messageString += "[" + timeStr + "] :: " 
             
             # source prepend
