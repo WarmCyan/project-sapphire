@@ -13,9 +13,7 @@ registerLogger(cl)
 
 rss_man = RSSManager()
 articles = rss_man.scrapeSource('reuters')
-
-for article in articles:
-    print(article.title)   
+rss_man.saveMetadata(articles)
 
 
 #scraper = reuters.RSSScraper()

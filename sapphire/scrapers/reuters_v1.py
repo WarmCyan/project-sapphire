@@ -2,7 +2,7 @@
 #
 #  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 05/24/2018
+#  Date edited: 05/26/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -94,7 +94,7 @@ class RSSScraper:
         items = soup.find_all('item')
         articles = []
         for item in items:
-            self.log("Found item '" + item.title.text + "'", 'DEBUG')
+            #self.log("Found item '" + item.title.text + "'", 'DEBUG')
             timestamp = datetime.datetime.strptime(item.pubDate.text, "%a, %d %b %Y %H:%M:%S %z")
             
             article = Article()

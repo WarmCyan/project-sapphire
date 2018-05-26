@@ -2,7 +2,6 @@
 
 News aggregation, statistics, analysis, and dashboard system
 
-
 # Sources
 
 ## RSS sources
@@ -26,3 +25,11 @@ News aggregation, statistics, analysis, and dashboard system
 * **NPR**
 
 ## Twitter sources
+
+
+# Requirements
+
+Uses the following python packages:
+* BeautifulSoup (bs4)
+* pycolor
+  [https://WildfireXIII@bitbucket.org/WildfireXIII/libpy-pycolor](https://WildfireXIII@bitbucket.org/WildfireXIII/libpy-pycolor)

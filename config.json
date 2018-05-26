@@ -1,1 +1,6 @@
-{ "feed_scrape_raw_dir":"./data/" }
+{ 
+	"feed_scrape_raw_dir":"./data/scrape/",
+	"feed_scrape_tmp_dir":"./data/metadata_bak/",
+	"metadata_queue_dir": "./data/metadata_queue/",
+	"metadata_store": "./data/metadata_store.csv"
+}
