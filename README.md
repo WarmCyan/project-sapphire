@@ -32,4 +32,4 @@ News aggregation, statistics, analysis, and dashboard system
 Uses the following python packages:
 * BeautifulSoup (bs4)
 * pycolor
-  [https://WildfireXIII@bitbucket.org/WildfireXIII/libpy-pycolor](https://WildfireXIII@bitbucket.org/WildfireXIII/libpy-pycolor)
+  [https://bitbucket.org/WildfireXIII/libpy-pycolor](https://bitbucket.org/WildfireXIII/libpy-pycolor)
