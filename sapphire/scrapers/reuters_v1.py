@@ -2,7 +2,7 @@
 #
 #  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 05/26/2018
+#  Date edited: 05/27/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -80,10 +80,10 @@ class RSSScraper:
         self.scrape_time = scrape_time
         self.log("Feed scraping complete")
         
-        # store the scrape
+        # store the scrape TODO: at some point, this should really probably go inside the rss manager?
         filename = sapphire.utility.getFileTimeStamp(scrape_time_dt) + "_" + self.getIdentifier() + "_" + self.subfeed + ".xml"
         self.log("Storing raw scrape in '" + filename + "'...")
-        with open(sapphire.utility.feed_scrape_raw_dir + "/" + filename, 'w') as f:
+        with open(sapphire.utility.feed_scrape_raw_dir + filename, 'w') as f:
             f.write(page)
         self.log("File saved")
         
@@ -106,7 +106,8 @@ class RSSScraper:
             article.source_type = "RSS"
             article.source_sub = "World News"
             article.source_explicit = self.url
-            article.meta_scrape_time
+            article.meta_scrape_time = self.scrape_time
+            article.meta_scrape_identifier = self.getIdentifier()
 
             articles.append(article)
 

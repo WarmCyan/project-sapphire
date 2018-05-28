@@ -2,7 +2,7 @@
 #
 #  File: logging.py (sapphire.utility)
 #  Date created: 05/20/2018
-#  Date edited: 05/24/2018
+#  Date edited: 05/27/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -53,20 +53,17 @@ class ConsoleLogger:
 
         messageString = ""
         
-        localAssociations = self.sourceAssociations
-        if msg.channel in self.channelAssociations:
-            localAssociations = self.channelAssociations
-
         messageSettings = None
         
-        if msg.source in localAssociations:
-            messageSettings = localAssociations[msg.source]
+        if msg.channel in self.channelAssociations:
+            messageSettings = self.channelAssociations[msg.channel]
+        elif msg.source in self.sourceAssociations:
+            messageSettings = self.sourceAssociations[msg.source]
         
         if messageSettings == None:
-            if msg.channel in localAssociations:
-                messageSettings = localAssociations[msg.channel]
-            elif "[ALL]" in localAssociations:
-                messageSettings = localAssociations["[ALL]"]
+            if "[ALL]" in self.channelAssociations:
+                messageSettings = self.channelAssociations["[ALL]"]
+        
 
         if messageSettings != None:
             timeStr = msg.dt.strftime("%Y-%m-%d %H:%M:%S.%f")
@@ -81,6 +78,8 @@ class ConsoleLogger:
                     messageString += pycolor.BRIGHTCYAN
                 elif messageSettings["color"] == "green":
                     messageString += pycolor.GREEN
+                elif messageSettings["color"] == "brightyellow":
+                    messageString += pycolor.BRIGHTYELLOW
 
             messageString += "[" + timeStr + "] :: " 
             

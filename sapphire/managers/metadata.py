@@ -2,7 +2,7 @@
 #
 #  File: metadata.py (sapphire.managers)
 #  Date created: 05/26/2018
-#  Date edited: 05/26/2018
+#  Date edited: 05/27/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -13,10 +13,12 @@
 
 import uuid
 import json
+import csv
 import os
 import pandas as pd
 
 import sapphire.utility
+from sapphire.article import Article
 
 
 class MetadataManager:
@@ -31,11 +33,22 @@ class MetadataManager:
     def loadStore(self):
         self.log("Loading metadata store...")
 
-        if not os.path.exist(self.store_filename):
+        if not os.path.exists(self.store_filename):
+            self.log("Metadata store file doesn't exist, creating '" + self.store_filename + "'...", "WARNING")
+            with open(self.store_filename, 'a') as csv_file:
+                headers = ["UUID"]
+                headers.extend(list(Article().getMetadataDictionary().keys()))
+                writer = csv.DictWriter(csv_file, delimiter=',', lineterminator='\n',fieldnames=headers)
+                writer.writeheader()
             
         
         self.store = pd.read_csv(self.store_filename)
         self.log("Metadata store loaded")
+
+    def saveStore(self):
+        self.log("Saving metadata store...")
+        self.store.to_csv(self.store_filename, index=False)
+        self.log("Saved!")
         
 
     # NOTE: consumption of 0 means consume all
@@ -62,18 +75,30 @@ class MetadataManager:
                 self.storeFrame(new_frame)
 
     def generateUUID(self, row):
-        row['UUID'] = uuid.uuid4()
+        row['UUID'] = uuid.uuid4().hex
+        return row
 
     def storeFrame(self, frame):
         # make sure the store is loaded
-        if self.store == None: self.loadStore()
+        if self.store is None: self.loadStore()
         
         # add UUIDs to it
-        #frame.loc[:'UUID'] = pd.Series()
-        frame.apply(lambda x: self.generateUUID(x), axis=1)
-        print(frame)
+        self.log("Generating UUIDs...")
+        frame['UUID'] = ''
+        frame.apply(self.generateUUID, axis=1)
+
+        # store
+        self.sendFrameToStore(frame)
+        self.sendFrameToDB(frame)
     
     def sendFrameToStore(self, frame):
+        self.log("Adding new entries to local store...")
+        self.store = pd.concat([self.store, frame])
+        self.log("Dropping duplicates...")
+        self.store = self.store.drop_duplicates(['title'])
+        self.saveStore()
+
+    def sendFrameToDB(self, frame):
         pass
         
     

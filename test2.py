@@ -9,7 +9,7 @@ print("--------------------------------------------------")
 sapphire.utility.readConfig("config.json")
 
 
-cl = ConsoleLogger({"[ALL]":{"color":"white"}, "DEBUG":{"color":"yellow"}}, {"RSS Manager":{"color":"brightcyan"}, "Metadata Manager":{"color":"green"}}, True, True)
+cl = ConsoleLogger({"[ALL]":{"color":"white"}, "DEBUG":{"color":"yellow"}, "WARNING":{"color":"brightyellow"}}, {"RSS Manager":{"color":"brightcyan"}, "Metadata Manager":{"color":"green"}}, True, True)
 registerLogger(cl)
 
 meta_man = MetadataManager()
