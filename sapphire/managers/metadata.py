@@ -30,6 +30,10 @@ class MetadataManager:
 
     def loadStore(self):
         self.log("Loading metadata store...")
+
+        if not os.path.exist(self.store_filename):
+            
+        
         self.store = pd.read_csv(self.store_filename)
         self.log("Metadata store loaded")
         
@@ -55,16 +59,22 @@ class MetadataManager:
                 articlesJSON = json.load(queue_file)
                 self.log("Converting JSON into dataframe...")
                 new_frame = pd.io.json.json_normalize(articlesJSON)
+                self.storeFrame(new_frame)
+
+    def generateUUID(self, row):
+        row['UUID'] = uuid.uuid4()
 
     def storeFrame(self, frame):
         # make sure the store is loaded
         if self.store == None: self.loadStore()
         
         # add UUIDs to it
-        frame.loc[:'UUID'] = pd.Series()
-                
+        #frame.loc[:'UUID'] = pd.Series()
+        frame.apply(lambda x: self.generateUUID(x), axis=1)
+        print(frame)
     
     def sendFrameToStore(self, frame):
+        pass
         
     
         
