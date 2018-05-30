@@ -2,5 +2,10 @@
 	"feed_scrape_raw_dir":"./data/scrape/",
 	"feed_scrape_tmp_dir":"./data/metadata_bak/",
 	"metadata_queue_dir": "./data/metadata_queue/",
-	"metadata_store": "./data/metadata_store.csv"
+	"metadata_store": "./data/metadata_store.csv",
+	
+	"db_host":"localhost",
+	"db_user":"root",
+	"db_password":"testing",
+	"db_db":"sapphire"
 }

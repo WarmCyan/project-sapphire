@@ -34,3 +34,4 @@ Uses the following python packages:
 * pycolor
   [https://bitbucket.org/WildfireXIII/libpy-pycolor](https://bitbucket.org/WildfireXIII/libpy-pycolor)
 * Pandas
+* mysqlclient

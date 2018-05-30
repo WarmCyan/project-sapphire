@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 05/26/2018
+#  Date edited: 05/29/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -24,6 +24,11 @@ feed_scrape_tmp_dir = ""
 metadata_queue_dir = ""
 
 metadata_store = ""
+
+db_host = ""
+db_user = ""
+db_password = ""
+db_db = ""
 
 
 # datetime format directives from https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
@@ -54,11 +59,17 @@ def readConfig(config):
     feed_scrape_tmp_dir = cleanFolderSetting(feed_scrape_tmp_dir)
     metadata_queue_dir = cleanFolderSetting(metadata_queue_dir)
 
-    '''
-    print(feed_scrape_raw_dir)
-    print(feed_scrape_tmp_dir)
-    print(metadata_queue_dir)
-    '''
+    try: db_host = settings["db_host"]
+    except KeyError: raise BadSettings("Setting 'db_host' not found")
+    
+    try: db_user = settings["db_user"]
+    except KeyError: raise BadSettings("Setting 'db_user' not found")
+    
+    try: db_password = settings["db_password"]
+    except KeyError: raise BadSettings("Setting 'db_password' not found")
+    
+    try: db_db = settings["db_db"]
+    except KeyError: raise BadSettings("Setting 'db_db' not found")
 
 def writeConfig():
     pass
