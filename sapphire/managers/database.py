@@ -2,7 +2,7 @@
 #
 #  File: database.py (sapphire.managers)
 #  Date created: 05/29/2018
-#  Date edited: 05/29/2018
+#  Date edited: 05/31/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -21,6 +21,7 @@ class DatabaseManager:
 
     def __init__(self):
         self.connect()
+        self.tableCheck()
 
     def __del__(self):
         try: self.db.close()
@@ -32,7 +33,19 @@ class DatabaseManager:
         self.cur = self.db.cursor()
         self.log("Connection established")
 
+    def tableCheck(self):
+        self.log("Checking tables...")
+        sql = '''SELECT 1 FROM Articles LIMIT 1;'''
+        
+        try: self.cur.execute(sql)
+        except: 
+            
+            return False
+
+        return True
+
     def createTables(self):
+        self.log("Creating tables...")
         sql = '''CREATE TABLE Articles (
             UUID char(32) primary key,
             title varchar(256),
@@ -49,8 +62,9 @@ class DatabaseManager:
             content_scrape_time datetime,
             content_scrape_identifier varchar(40)
         );'''
-        
         self.cur.execute(sql)
+        
+        self.tableCheck()
 
         
     

@@ -2,7 +2,7 @@
 #
 #  File: metadata.py (sapphire.managers)
 #  Date created: 05/26/2018
-#  Date edited: 05/27/2018
+#  Date edited: 05/31/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -18,6 +18,7 @@ import os
 import pandas as pd
 
 import sapphire.utility
+import sapphire.managers.database
 from sapphire.article import Article
 
 
@@ -99,7 +100,9 @@ class MetadataManager:
         self.saveStore()
 
     def sendFrameToDB(self, frame):
-        pass
+
+        # NOTE: this is just testing code for now
+        db = sapphire.managers.database.DatabaseManager()
         
     
         

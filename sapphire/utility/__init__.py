@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 05/29/2018
+#  Date edited: 05/31/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -38,6 +38,11 @@ def readConfig(config):
     global feed_scrape_tmp_dir
     global metadata_queue_dir
     global metadata_store
+    
+    global db_host
+    global db_user
+    global db_password
+    global db_db
     
     settings = {}
     with open(config, 'r') as f:
