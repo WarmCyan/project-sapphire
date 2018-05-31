@@ -21,7 +21,8 @@ class DatabaseManager:
 
     def __init__(self):
         self.connect()
-        self.tableCheck()
+        tablesExist = self.tableCheck()
+        if not tablesExist: self.createTables()
 
     def __del__(self):
         try: self.db.close()
@@ -39,9 +40,8 @@ class DatabaseManager:
         
         try: self.cur.execute(sql)
         except: 
-            
+            self.log("Database tables don't exist", "WARNING")
             return False
-
         return True
 
     def createTables(self):
@@ -64,8 +64,9 @@ class DatabaseManager:
         );'''
         self.cur.execute(sql)
         
-        self.tableCheck()
-
+        result = self.tableCheck()
+        if not result: self.log("Tables couldn't be created", "ERROR")
+        else: self.log("Tables successfully created!")
         
     
     def log(self, msg, channel=""):

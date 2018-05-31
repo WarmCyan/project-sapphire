@@ -2,7 +2,7 @@
 #
 #  File: logging.py (sapphire.utility)
 #  Date created: 05/20/2018
-#  Date edited: 05/27/2018
+#  Date edited: 05/31/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -80,6 +80,8 @@ class ConsoleLogger:
                     messageString += pycolor.GREEN
                 elif messageSettings["color"] == "brightyellow":
                     messageString += pycolor.BRIGHTYELLOW
+                elif messageSettings["color"] == "red":
+                    messageString += pycolor.RED
 
             messageString += "[" + timeStr + "] :: " 
             
