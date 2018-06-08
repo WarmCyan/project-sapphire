@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire)
 #  Date created: 05/22/2018
-#  Date edited: 05/25/2018
+#  Date edited: 06/08/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -18,6 +18,7 @@ class Article:
 
     def __init__(self):
         # metadata
+        self.UUID = ""
         self.title = None
         self.description = None
         self.timestamp = None               # make sure it's in UTC
@@ -53,6 +54,7 @@ class Article:
 
     def getMetadataDictionary(self):
         dictionary = {
+                "UUID": self.UUID,
                 "title": self.title,
                 "description": self.description,
                 "timestamp": self.timestamp,

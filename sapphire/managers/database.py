@@ -2,7 +2,7 @@
 #
 #  File: database.py (sapphire.managers)
 #  Date created: 05/29/2018
-#  Date edited: 05/31/2018
+#  Date edited: 06/08/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -14,6 +14,7 @@
 import MySQLdb
 
 import sapphire.utility
+from sapphire.article import Article
 
 class DatabaseManager:
 
@@ -67,7 +68,13 @@ class DatabaseManager:
         result = self.tableCheck()
         if not result: self.log("Tables couldn't be created", "ERROR")
         else: self.log("Tables successfully created!")
+
+    def storeArticle(self, article):
+        # ensure article not already there
+        #self.cur.execute("""SELECT 
+        pass
         
+
     
     def log(self, msg, channel=""):
         sapphire.utility.logging.log(msg, channel, source=self.IDENTIFIER)

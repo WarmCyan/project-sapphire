@@ -2,7 +2,7 @@
 #
 #  File: metadata.py (sapphire.managers)
 #  Date created: 05/26/2018
-#  Date edited: 05/31/2018
+#  Date edited: 06/08/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -37,8 +37,9 @@ class MetadataManager:
         if not os.path.exists(self.store_filename):
             self.log("Metadata store file doesn't exist, creating '" + self.store_filename + "'...", "WARNING")
             with open(self.store_filename, 'a') as csv_file:
-                headers = ["UUID"]
-                headers.extend(list(Article().getMetadataDictionary().keys()))
+                #headers = ["UUID"]
+                #headers.extend(list(Article().getMetadataDictionary().keys()))
+                headers = list(Article().getMetadataDictionary().keys())
                 writer = csv.DictWriter(csv_file, delimiter=',', lineterminator='\n',fieldnames=headers)
                 writer.writeheader()
             
