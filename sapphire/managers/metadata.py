@@ -2,7 +2,7 @@
 #
 #  File: metadata.py (sapphire.managers)
 #  Date created: 05/26/2018
-#  Date edited: 06/08/2018
+#  Date edited: 06/09/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -75,9 +75,14 @@ class MetadataManager:
                 self.log("Converting JSON into dataframe...")
                 new_frame = pd.io.json.json_normalize(articlesJSON)
                 self.storeFrame(new_frame)
+                
+            self.log("Queue file '" + filename + "' has successfully been consumed")
+            os.remove(filename)
+            self.log("'" + filename + "' removed from queue")
 
     def generateUUID(self, row):
-        row['UUID'] = uuid.uuid4().hex
+        #row['UUID'] = uuid.uuid4().hex
+        row['UUID'] = uuid.uuid5(sapphire.utility.getNamespaceUUID(row['meta_scrape_identifier']), row['title']).hex
         return row
 
     def storeFrame(self, frame):
@@ -90,23 +95,29 @@ class MetadataManager:
         frame.apply(self.generateUUID, axis=1)
 
         # store
-        self.sendFrameToStore(frame)
-        self.sendFrameToDB(frame)
+        storeCount = self.sendFrameToStore(frame)
+        dbCount = self.sendFrameToDB(frame)
+        if storeCount == dbCount:
+            self.log("Data stores are in sync - DB:" + str(dbCount) + " Local:" + str(storeCount))
+        else:
+            self.log("Data stores are desynchronized - DB:" + str(dbCount) + " Local:" + str(storeCount), "WARNING")
     
+    # NOTE: returns number of entries in local store
     def sendFrameToStore(self, frame):
         self.log("Adding new entries to local store...")
         self.store = pd.concat([self.store, frame])
         self.log("Dropping duplicates...")
-        self.store = self.store.drop_duplicates(['title'])
+        self.store = self.store.drop_duplicates(['UUID'])
         self.log("Local store now contains " + str(self.store.shape[0]) + " entries")
         self.saveStore()
+        return self.store.shape[0]
 
     def sendFrameToDB(self, frame):
         self.log("Adding new entries to database...")
         # NOTE: this is just testing code for now
         db = sapphire.managers.database.DatabaseManager()
         db.storeMetadataFrame(frame)
-    
+        return db.getArticleCount()
         
     def log(self, msg, channel=""):
         sapphire.utility.logging.log(msg, channel, source=self.IDENTIFIER)

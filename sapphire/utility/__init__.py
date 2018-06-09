@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 05/31/2018
+#  Date edited: 06/09/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -14,6 +14,7 @@
 import datetime
 from pytz import timezone
 
+import uuid
 import json
 
 from sapphire.utility.exceptions import BadSettings
@@ -29,6 +30,9 @@ db_host = ""
 db_user = ""
 db_password = ""
 db_db = ""
+
+
+rootUUID = uuid.UUID('{00000000-0000-0000-0000-000000000000}')
 
 
 # datetime format directives from https://docs.python.org/3/library/datetime.html#strftime-and-strptime-behavior
@@ -108,3 +112,6 @@ def getFileTimeStamp(dt):
 
 #def getCurrentTimestamp():
     #return getCorrectTimestamp(datetime.datetime.now())
+
+def getNamespaceUUID(namespaceString):
+    return uuid.uuid5(rootUUID, namespaceString)
