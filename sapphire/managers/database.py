@@ -69,12 +69,32 @@ class DatabaseManager:
         if not result: self.log("Tables couldn't be created", "ERROR")
         else: self.log("Tables successfully created!")
 
-    def storeArticle(self, article):
+    #def storeArticle(self, article):
         # ensure article not already there
         #self.cur.execute("""SELECT 
-        pass
+        #pass
         
+    def storeMetadataFrame(self, frame):
+        self.log("Storing metadata frame...")
+        for index, row in frame.iterrows():
+            
+            # make sure article with this title doesn't exist yet
+            checkQuery = '''SELECT COUNT(*) FROM Articles WHERE title = %s'''
+            self.cur.execute(checkQuery, (row['title'],))
+            if self.cur.fetchone()[0] > 0: 
+                continue 
+                self.log("SKIPPING...", "DEBUG")
 
+            insertQuery = '''INSERT INTO Articles (UUID, title, description, timestamp, link, source_name, source_type, source_sub, source_explicit, meta_scrape_time, meta_scrape_identifier) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'''
+            self.cur.execute(insertQuery, (row['UUID'], row['title'], row['description'], row['timestamp'], row['link'], row['source_name'], row['source_type'], row['source_sub'], row['source_explicit'], row['meta_scrape_time'], row['meta_scrape_identifier']))
+
+        self.db.commit()
+        self.log("All new metadata stored")
+        self.log("Database now contains " + str(self.getArticleCount()) + " entries")
+
+    def getArticleCount(self):
+        self.cur.execute('''SELECT COUNT(*) FROM Articles''')
+        return self.cur.fetchone()[0]
     
     def log(self, msg, channel=""):
         sapphire.utility.logging.log(msg, channel, source=self.IDENTIFIER)

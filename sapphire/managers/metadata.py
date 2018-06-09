@@ -98,13 +98,14 @@ class MetadataManager:
         self.store = pd.concat([self.store, frame])
         self.log("Dropping duplicates...")
         self.store = self.store.drop_duplicates(['title'])
+        self.log("Local store now contains " + str(self.store.shape[0]) + " entries")
         self.saveStore()
 
     def sendFrameToDB(self, frame):
-
+        self.log("Adding new entries to database...")
         # NOTE: this is just testing code for now
         db = sapphire.managers.database.DatabaseManager()
-        
+        db.storeMetadataFrame(frame)
     
         
     def log(self, msg, channel=""):
