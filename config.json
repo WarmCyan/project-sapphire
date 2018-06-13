@@ -1,8 +1,12 @@
 { 
 	"feed_scrape_raw_dir":"./data/scrape/",
 	"feed_scrape_tmp_dir":"./data/metadata_bak/",
-	"metadata_queue_dir": "./data/metadata_queue/",
-	"metadata_store": "./data/metadata_store.csv",
+	
+	"metadata_queue_dir":"./data/metadata_queue/",
+	"metadata_store":"./data/metadata_store.csv",
+	
+	"content_scrape_raw_dir":"./data/content_scrape",
+	"content_store_dir":"./data/content_store",
 	
 	"db_host":"localhost",
 	"db_user":"root",

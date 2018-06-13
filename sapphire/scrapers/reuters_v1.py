@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 import urllib.request
 
 import datetime
+import re
 
 import sapphire.utility
 from sapphire.article import Article
@@ -125,6 +126,7 @@ class ContentScraper:
         self.url = ""
         self.content = ""
         self.uuid = ""
+        self.page = None
 
     def run(self, url, uuid):
         self.url = url
@@ -140,9 +142,9 @@ class ContentScraper:
     def scrape(self):
         # scrape all the html for that page
         self.log("Scraping article from '" + self.url + "'...")
-        request = urllib.request.Request(url)
+        request = urllib.request.Request(self.url)
         response = urllib.request.urlopen(request)
-        page = response.read().decode('utf-8')
+        self.page = response.read().decode('utf-8')
 
         # get time of scrape
         scrape_time_dt = datetime.datetime.now()
@@ -153,15 +155,15 @@ class ContentScraper:
         # store the scrape
         filename = sapphire.utility.getFileTimeStamp(scrape_time_dt) + "_" + self.getIdentifier() + "_" + self.uuid
         self.log("Storing raw scrape in '" + filename + "'...")
-        with open(sapphire.utility.content_raw_dir + filename, 'w') as f:
-            f.write(page)
+        with open(sapphire.utility.content_scrape_raw_dir + filename, 'w') as f:
+            f.write(self.page)
         self.log("File saved")
 
     def extract(self):
         self.log("Parsing scrape for content...")
         self.content = ""
         
-        soup = BeautifulSoup(page, "lxml")
+        soup = BeautifulSoup(self.page, "lxml")
 
         # query down to find content paragraph tags
         content_container = soup.find_all(attrs={"class":re.compile("container\w*\ content")}, limit=1)[0]
