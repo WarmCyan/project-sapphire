@@ -2,7 +2,7 @@
 #
 #  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 05/27/2018
+#  Date edited: 06/12/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -114,3 +114,63 @@ class RSSScraper:
         self.log("Finished parsing scrape")
         self.articles = articles
 
+
+class ContentScraper:
+
+    SOURCE = "reuters"
+    TYPE = "content"
+    VERSION = "v1"
+
+    def __init__(self):
+        self.url = ""
+        self.content = ""
+        self.uuid = ""
+
+    def run(self, url, uuid):
+        self.url = url
+        self.uuid = uuid
+        self.scrape()
+        self.extract()
+        return self.content
+
+    def getIdentifier(self): return self.SOURCE + "_" + self.TYPE + "_" + self.VERSION
+    def log(self, msg, channel=""):
+        sapphire.utility.logging.log(msg, channel, source=self.getIdentifier())
+
+    def scrape(self):
+        # scrape all the html for that page
+        self.log("Scraping article from '" + self.url + "'...")
+        request = urllib.request.Request(url)
+        response = urllib.request.urlopen(request)
+        page = response.read().decode('utf-8')
+
+        # get time of scrape
+        scrape_time_dt = datetime.datetime.now()
+        scrape_time = sapphire.utility.getTimestamp(scrape_time_dt)
+        self.scrape_time = scrape_time
+        self.log("Scrape complete")
+
+        # store the scrape
+        filename = sapphire.utility.getFileTimeStamp(scrape_time_dt) + "_" + self.getIdentifier() + "_" + self.uuid
+        self.log("Storing raw scrape in '" + filename + "'...")
+        with open(sapphire.utility.content_raw_dir + filename, 'w') as f:
+            f.write(page)
+        self.log("File saved")
+
+    def extract(self):
+        self.log("Parsing scrape for content...")
+        self.content = ""
+        
+        soup = BeautifulSoup(page, "lxml")
+
+        # query down to find content paragraph tags
+        content_container = soup.find_all(attrs={"class":re.compile("container\w*\ content")}, limit=1)[0]
+        body = content_container.find_all(attrs={"class":re.compile("body")}, limit=1)[0]
+        paragraphs = body.find_all('p')[:-1] # don't include last, it's just reporting
+
+        # concatenate/clean each paragraph
+        for p in paragraphs: 
+            self.content += p.text.strip()
+            self.content += '\n'
+        self.content = self.content.strip()
+        self.log("Content parse complete")

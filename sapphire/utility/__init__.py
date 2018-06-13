@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 06/09/2018
+#  Date edited: 06/12/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -23,6 +23,8 @@ from sapphire.utility.exceptions import BadSettings
 feed_scrape_raw_dir = ""
 feed_scrape_tmp_dir = ""
 metadata_queue_dir = ""
+content_scrape_raw_dir = ""
+content_scrape_store_dir = ""
 
 metadata_store = ""
 
@@ -42,6 +44,8 @@ def readConfig(config):
     global feed_scrape_tmp_dir
     global metadata_queue_dir
     global metadata_store
+    global content_scrape_raw_dir
+    global content_scrape_store_dir
     
     global db_host
     global db_user
@@ -64,9 +68,17 @@ def readConfig(config):
     try: metadata_store = settings["metadata_store"]
     except KeyError: raise BadSettings("Setting 'metadata_store' not found")
     
+    try: content_scrape_store_dir = settings["content_scrape_store_dir"]
+    except KeyError: raise BadSettings("Setting 'content_scrape_store_dir' not found")
+    
+    try: content_scrape_raw_dir = settings["content_scrape_raw_dir"]
+    except KeyError: raise BadSettings("Setting 'content_scrape_raw_dir' not found")
+    
     feed_scrape_raw_dir = cleanFolderSetting(feed_scrape_raw_dir)
     feed_scrape_tmp_dir = cleanFolderSetting(feed_scrape_tmp_dir)
     metadata_queue_dir = cleanFolderSetting(metadata_queue_dir)
+    content_scrape_raw_dir = cleanFolderSetting(content_scrape_raw_dir)
+    content_scrape_store_dir = cleanFolderSetting(content_scrape_store_dir)
 
     try: db_host = settings["db_host"]
     except KeyError: raise BadSettings("Setting 'db_host' not found")
