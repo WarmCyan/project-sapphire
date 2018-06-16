@@ -2,7 +2,7 @@
 #
 #  File: database.py (sapphire.managers)
 #  Date created: 05/29/2018
-#  Date edited: 06/09/2018
+#  Date edited: 06/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -88,6 +88,33 @@ class DatabaseManager:
     def getArticleCount(self):
         self.cur.execute('''SELECT COUNT(*) FROM Articles''')
         return self.cur.fetchone()[0]
+
+    def updateArticle(self, article):
+        self.log("Updating article " + article.UUID + "...")
+        updateQuery = '''UPDATE Articles SET 
+            title = ?,
+            description = ?,
+            timestamp = ?,
+            link = ?,
+            source_name = ?,
+            source_type = ?,
+            source_sub = ?,
+            source_explicit = ?,
+            meta_scrape_time = ?,
+            meta_scrape_identifier = ?,
+            content = ?,
+            content_scrape_time = ?,
+            content_scrape_identifier = ?
+            
+            WHERE UUID = ?'''
+
+        article.cur.execute(updateQuery, (article.title, article.description, article.timestamp, article.link, article.source_name, article.source_type, article.source_sub, article.source_explicit, article.meta_scrape_time, article.meta_scrape_identifier))
+        self.db.commit()
+        self.log("Article updated in database")
+
+    # NOTE: returns first article without content
+    def getFirstLackingArticle(self):
+        findQuery = '''SELECT * FROM Articles WHERE content ''' 
     
     def log(self, msg, channel=""):
         sapphire.utility.logging.log(msg, channel, source=self.IDENTIFIER)

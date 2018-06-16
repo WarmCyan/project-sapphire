@@ -2,7 +2,7 @@
 #
 #  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 06/12/2018
+#  Date edited: 06/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -133,7 +133,7 @@ class ContentScraper:
         self.uuid = uuid
         self.scrape()
         self.extract()
-        return self.content
+        return self.content, self.scrape_time
 
     def getIdentifier(self): return self.SOURCE + "_" + self.TYPE + "_" + self.VERSION
     def log(self, msg, channel=""):
