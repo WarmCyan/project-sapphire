@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 06/12/2018
+#  Date edited: 06/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -121,6 +121,9 @@ def getTimestamp(dt):
 
 def getFileTimeStamp(dt):
     return _getFileFormattedTimestamp(_getUTCTime(dt))
+
+def getDT(strTime):
+    return datetime.datetime.strptime(strTime, "%Y-%m-%d %H:%M:%S")
 
 #def getCurrentTimestamp():
     #return getCorrectTimestamp(datetime.datetime.now())

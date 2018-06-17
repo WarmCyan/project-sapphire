@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire)
 #  Date created: 05/22/2018
-#  Date edited: 06/08/2018
+#  Date edited: 06/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -13,6 +13,8 @@
 #***************************************************************************
 
 # TODO: should store "version" of scrapers used?
+
+import sapphire.utility
 
 class Article:
 
@@ -51,6 +53,24 @@ class Article:
         self.content = content
         self.content_scrape_time = scrape_time
         self.content_scrape_identifier = scrape_identifier
+
+    def populateFromRow(self, row):
+        self.UUID = row[0]
+        self.title = row[1]
+        self.description = row[2]
+        self.timestamp = row[3]
+        self.link = row[4]
+        self.source_name = row[5]
+        self.source_type = row[6]
+        self.source_sub = row[7]
+        self.source_explicit = row[8]
+        #self.meta_scrape_time = sapphire.utility.getDT(row[9])
+        self.meta_scrape_time = row[9]
+        self.meta_scrape_identifier = row[10]
+        self.content = row[11]
+        #self.content_scrape_time = sapphire.utility.getDT(row[12])
+        self.content_scrape_time = row[12]
+        self.content_scrape_identifier = row[13]
 
     def getMetadataDictionary(self):
         dictionary = {
