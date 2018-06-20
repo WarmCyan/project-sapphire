@@ -1,0 +1,13 @@
+body
+{
+	background-color: #212128;
+	margin: 0px;
+}
+
+#header
+{
+	padding: 10px;
+	border-bottom: 1px solid silver;
+	margin: 0px;
+	display: block;
+}
