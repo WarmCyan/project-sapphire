@@ -11,3 +11,20 @@ body
 	margin: 0px;
 	display: block;
 }
+
+#header-left, #header-right
+{
+	display: block;
+}
+
+#header-left
+{
+	float: left;
+	margin-left: 10px;
+}
+
+#header-right
+{
+	float: right;
+	margin-right: 10px;
+}
