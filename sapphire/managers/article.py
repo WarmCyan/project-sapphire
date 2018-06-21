@@ -41,9 +41,28 @@ class ArticleManager:
         self.rss_man = RSSManager()
         self.content_man = ContentManager()
         self.meta_man = MetadataManager()
+        self.log("Initialized")
 
     def configure(self, config):
         sapphire.utility.readConfig(config)
 
     def log(self, msg, channel=""):
         sapphire.utility.logging.log(msg, channel, source=self.IDENTIFIER)
+
+    def scrapeFeeds(self):
+        self.log("Scraping all feeds...")
+        articles = self.rss_man.scrapeSource('reuters')
+        self.rss_man.saveMetadata(articles)
+        self.log("Feed scrape complete")
+
+    def consumeQueue(self):
+        self.log("Consuming metadata queue...")
+        self.meta_man.consumeQueue()
+        self.log("Queue consumption complete")
+
+    def scrapeNextArticle(self):
+        self.log("Scraping next article...")
+        db = DatabaseManager()
+        article = db.getFirstLackingArticle()
+        self.content_man.scrape(article)
+        self.log("Article scrape complete")
