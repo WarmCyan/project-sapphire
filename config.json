@@ -11,5 +11,25 @@
 	"db_host":"localhost",
 	"db_user":"root",
 	"db_password":"testing",
-	"db_db":"sapphire"
+	"db_db":"sapphire",
+
+	"ConsoleLogger":
+	{
+		"channels":
+		{
+			"[ALL]":{"color":"white"}, 
+			"DEBUG":{"color":"yellow"},
+			"WARNING":{"color":"brightyellow"},
+			"ERROR":{"color":"red"}
+		},
+		"sources":
+		{
+			"RSS Manager":{"color":"brightcyan"},
+			"Metadata Manager":{"color":"green"},
+			"Content Manager":{"color":"blue"},
+			"Article Manager":{"color":"magenta"}
+		},
+		"prepend_channel":true,
+		"prepend_source":true
+	}
 }

@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 06/16/2018
+#  Date edited: 06/20/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -18,6 +18,7 @@ import uuid
 import json
 
 from sapphire.utility.exceptions import BadSettings
+from sapphire.utility.logging import registerLogger, ConsoleLogger
 
 
 feed_scrape_raw_dir = ""
@@ -91,6 +92,25 @@ def readConfig(config):
     
     try: db_db = settings["db_db"]
     except KeyError: raise BadSettings("Setting 'db_db' not found")
+
+    try: 
+        cl = settings["ConsoleLogger"]
+        
+        try: channels = cl["channels"]
+        except KeyError: raise BadSettings("Setting 'channels' not found under ConsoleLogger")
+        
+        try: sources = cl["sources"]
+        except KeyError: raise BadSettings("Setting 'sources' not found under ConsoleLogger")
+
+        try: preChannel = cl["prepend_channel"]
+        except KeyError: raise BadSettings("Setting 'prepend_channel' not found under ConsoleLogger")
+        
+        try: preSource = cl["prepend_source"]
+        except KeyError: raise BadSettings("Setting 'prepend_source' not found under ConsoleLogger")
+
+        logger = ConsoleLogger(channels, sources, preChannel, preSource)
+        registerLogger(logger)
+    except: pass
 
 def writeConfig():
     pass

@@ -27,9 +27,11 @@ class MetadataManager:
     IDENTIFIER = "Metadata Manager"
 
     def __init__(self):
+        self.log("Initializing metadata manager...")
         self.store_filename = sapphire.utility.metadata_store
         self.queue_dir = sapphire.utility.metadata_queue_dir
         self.store = None # will contain the dataframe
+        self.log("Initialized")
 
     def loadStore(self):
         self.log("Loading metadata store...")

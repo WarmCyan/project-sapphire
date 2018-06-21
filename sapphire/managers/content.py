@@ -2,7 +2,7 @@
 #
 #  File: content.py (sapphire.managers)
 #  Date created: 06/16/2018
-#  Date edited: 06/16/2018
+#  Date edited: 06/20/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -30,7 +30,9 @@ class ContentManager:
     sources_list = {"Reuters": None} # TODO: fix capitalization somemhow
 
     def __init__(self):
+        self.log("Initializing content manager...")
         self.sources_list["Reuters"] = reuters_v1.ContentScraper()
+        self.log("Initialized")
 
 
     def scrape(self, article):

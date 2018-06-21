@@ -2,7 +2,7 @@
 #
 #  File: rss.py (sapphire.managers)
 #  Date created: 05/24/2018
-#  Date edited: 05/25/2018
+#  Date edited: 06/20/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -30,7 +30,9 @@ class RSSManager:
     sources_list = {"reuters": None} # should be filled with the requiste RSS Scraper class
 
     def __init__(self):
+        self.log("Initializing RSS manager...")
         self.sources_list["reuters"] = reuters_v1.RSSScraper()
+        self.log("Initialized")
 
     # NOTE: scrapes ALL subfeeds
     def scrapeSource(self, source):
