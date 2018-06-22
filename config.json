@@ -7,6 +7,8 @@
 	
 	"content_scrape_raw_dir":"./data/content_scrape",
 	"content_store_dir":"./data/content_store",
+
+	"stats_dir":"./data/stats",
 	
 	"db_host":"localhost",
 	"db_user":"root",

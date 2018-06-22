@@ -16,6 +16,8 @@ import os
 import pycolor
 
 from sapphire.managers import article
+import sapphire.utility
+import sapphire.utility.stats
 
 
 
@@ -26,8 +28,16 @@ COPYRIGHT = "Copyright © 2018 Digital Warrior Labs"
 
 
 
-def show_help():
+def showHelp():
     print("This is the help menu")
+
+
+def reportFolderStats(name, folderpath):
+    usage, files, size = sapphire.utility.stats.updateFileStats(name, folderpath)
+    print("\n" + folderpath + ":")
+    print(usage)
+    print(str(files) + " files")
+
     
 def repl():
     print(pycolor.BRIGHTBLUE + "Sapphire> " + pycolor.RESET, end='')
@@ -35,6 +45,16 @@ def repl():
     
     if command == "exit":
         return -1
+    elif command == "stats":
+        reportFolderStats("feed_scrape_raw_dir", sapphire.utility.feed_scrape_raw_dir)
+        reportFolderStats("feed_scrape_tmp_dir", sapphire.utility.feed_scrape_tmp_dir)
+        reportFolderStats("metadata_queue_dir", sapphire.utility.metadata_queue_dir)
+        reportFolderStats("content_scrape_raw_dir", sapphire.utility.content_scrape_raw_dir)
+        reportFolderStats("content_store_dir", sapphire.utility.content_store_dir)
+        return 0
+    print(pycolor.BRIGHTRED + "Unrecognized command '" + command + "'" + pycolor.RESET)
+    return 1
+        
 
 def repl_loop():
     result = 0
@@ -51,7 +71,7 @@ def repl_loop():
     
 # handle a confused user
 if len(sys.argv[1:]) == 0 or sys.argv[1] == 'help' or sys.argv[1] == '-h':
-    show_help()
+    showHelp()
     exit()
 
 # print fanciness informational stuffs
@@ -78,6 +98,9 @@ for f in files:
 for arg in sys.argv[2:]:
     if arg.startswith("--config"):
         config_filename = arg[arg.index('=')+1:]
+
+article_man = article.ArticleManager(config_filename)
+print() # add a newline
 
 # handle mode
 if mode == "repl":
