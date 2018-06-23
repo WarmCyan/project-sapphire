@@ -2,7 +2,7 @@
 #
 #  File: rss.py (sapphire.managers)
 #  Date created: 05/24/2018
-#  Date edited: 06/20/2018
+#  Date edited: 06/22/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -17,6 +17,7 @@ import os
 import datetime
 
 import sapphire.utility
+import sapphire.utility.stats
 
 from sapphire.scrapers import reuters_v1
 
@@ -50,6 +51,8 @@ class RSSManager:
             time.sleep(1)
 
         self.log("All " + source + " RSS subfeeds scraped")
+        humansize, count, size = sapphire.utility.stats.updateFileStats("feed_scrape_raw_dir", sapphire.utility.feed_scrape_raw_dir)
+        self.log("RSS scrape folder contains " + str(count) + " files and takes up " + humansize)
 
         return articles
 
@@ -72,7 +75,12 @@ class RSSManager:
 
         self.storeBackupMetadata(articleMetadata, timestamp)
         self.enqueueMetadata(articleMetadata, timestamp)
+        humansize, count, size = sapphire.utility.stats.updateFileStats("feed_scrape_tmp_dir", sapphire.utility.feed_scrape_tmp_dir)
+        humansize2, count2, size2 = sapphire.utility.stats.updateFileStats("metadata_queue_dir", sapphire.utility.metadata_queue_dir)
         self.log("All scrape metadata saved")
+        
+        self.log("Temporary metadata backup folder contains " + str(count) + " files and takes up " + humansize)
+        self.log("Metadata queue folder contains " + str(count2) + " files and takes up " + humansize2)
         
 
     # NOTE: auto increments a number at the end until finds filename that doesn't already exist

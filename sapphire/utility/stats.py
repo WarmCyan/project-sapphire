@@ -2,7 +2,7 @@
 #
 #  File: stats.py (sapphire.utility)
 #  Date created: 06/21/2018
-#  Date edited: 06/21/2018
+#  Date edited: 06/22/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -52,7 +52,6 @@ def updateFileStats(name, folderpath):
     with open(sapphire.utility.stats_dir + name + "_filesize_raw", 'w') as file:
         file.write(str(size))
     with open(sapphire.utility.stats_dir + name + "_filecount", 'w') as file:
-        print(count)
         file.write(str(count))
 
     return humansize, count, size # just in case you want to do something with displaying data without recalling calculate function

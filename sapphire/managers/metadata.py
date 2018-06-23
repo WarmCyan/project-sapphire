@@ -2,7 +2,7 @@
 #
 #  File: metadata.py (sapphire.managers)
 #  Date created: 05/26/2018
-#  Date edited: 06/09/2018
+#  Date edited: 06/22/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
