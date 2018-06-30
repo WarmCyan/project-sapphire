@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 06/21/2018
+#  Date edited: 06/30/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -30,6 +30,7 @@ content_store_dir = ""
 metadata_store = ""
 
 stats_dir = ""
+schedule_dir = ""
 
 db_host = ""
 db_user = ""
@@ -50,6 +51,7 @@ def readConfig(config):
     global content_scrape_raw_dir
     global content_store_dir
     global stats_dir
+    global schedule_dir
     
     global db_host
     global db_user
@@ -81,12 +83,16 @@ def readConfig(config):
     try: stats_dir = settings["stats_dir"]
     except KeyError: raise BadSettings("Setting 'stats_dir' not found")
     
+    try: schedule_dir = settings["schedule_dir"]
+    except KeyError: raise BadSettings("Setting 'schedule_dir' not found")
+    
     feed_scrape_raw_dir = cleanFolderSetting(feed_scrape_raw_dir)
     feed_scrape_tmp_dir = cleanFolderSetting(feed_scrape_tmp_dir)
     metadata_queue_dir = cleanFolderSetting(metadata_queue_dir)
     content_scrape_raw_dir = cleanFolderSetting(content_scrape_raw_dir)
     content_store_dir = cleanFolderSetting(content_store_dir)
     stats_dir = cleanFolderSetting(stats_dir)
+    schedule_dir = cleanFolderSetting(schedule_dir)
 
     try: db_host = settings["db_host"]
     except KeyError: raise BadSettings("Setting 'db_host' not found")

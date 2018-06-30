@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 06/21/2018
+#  Date edited: 06/30/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -12,8 +12,11 @@
 #
 #***************************************************************************
 
+import time
+
 import sapphire.utility
 import sapphire.utility.logging
+import sapphire.utility.scheduler
 
 from sapphire.managers.rss import RSSManager
 from sapphire.managers.content import ContentManager
@@ -58,3 +61,18 @@ class ArticleManager:
         article = db.getFirstLackingArticle()
         self.content_man.scrape(article)
         self.log("Article scrape complete")
+
+    # NOTE: rate is in seconds
+    def pollSchedule(self, name, rate):
+        polling = True
+
+        while polling:
+            schedule = sapphire.utility.scheduler.getSchedule(name)
+            runnableSchedule = sapphire.utility.scheduler.findRunnable(schedule)
+            for item in runnableSchedule:
+                if item[0] != 0:
+                    readableTime = sapphire.utility.getTimestamp(datetime.datetime.fromtimestamp(int(item[0])))
+                    self.log("Running '" + item[1] + " scheduled for " + readableTime + "...")
+
+
+            time.sleep(rate)
