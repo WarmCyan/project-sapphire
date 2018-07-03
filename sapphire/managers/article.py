@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 06/30/2018
+#  Date edited: 07/02/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -62,17 +62,38 @@ class ArticleManager:
         self.content_man.scrape(article)
         self.log("Article scrape complete")
 
+    # NOTE: this returns any new commands 
+    def handleCommand(self, cmd, poll=False):
+        parts = cmd.split(' ')
+        
+        if parts[0] == "scrape":
+            if parts[1] == "feed":
+                self.scrapeFeeds()
+                
+                # return new commands (with times)
+            elif parts[1] == "article":
+                self.scrapeNextArticle()
+        elif parts[0] == "queue":
+            self.consumeQueue()
+        
     # NOTE: rate is in seconds
     def pollSchedule(self, name, rate):
         polling = True
 
         while polling:
+            pollTime = sapphire.utility.getTimestamp(datetime.datetime.now())
+            print("Last polled at " + polltime + "\r", end='')
+            
             schedule = sapphire.utility.scheduler.getSchedule(name)
             runnableSchedule = sapphire.utility.scheduler.findRunnable(schedule)
             for item in runnableSchedule:
                 if item[0] != 0:
                     readableTime = sapphire.utility.getTimestamp(datetime.datetime.fromtimestamp(int(item[0])))
                     self.log("Running '" + item[1] + " scheduled for " + readableTime + "...")
+                    newItems = handleCommand()
+
+                    schedule.extend(newItems)
+                    
 
 
             time.sleep(rate)
