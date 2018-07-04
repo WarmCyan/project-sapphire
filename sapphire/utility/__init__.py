@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 06/30/2018
+#  Date edited: 07/04/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -38,6 +38,9 @@ db_password = ""
 db_db = ""
 
 
+feed_rates = []
+
+
 rootUUID = uuid.UUID('{00000000-0000-0000-0000-000000000000}')
 
 
@@ -57,6 +60,8 @@ def readConfig(config):
     global db_user
     global db_password
     global db_db
+
+    global feed_rates
     
     settings = {}
     with open(config, 'r') as f:
@@ -123,6 +128,9 @@ def readConfig(config):
 
         logger = ConsoleLogger(channels, sources, preChannel, preSource)
         registerLogger(logger)
+    except: pass
+    
+    try: feed_rates = settings["feed_rates"]
     except: pass
 
 def writeConfig():

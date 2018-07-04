@@ -2,7 +2,7 @@
 #
 #  File: sapphire.py
 #  Date created: 06/21/2018
-#  Date edited: 06/21/2018
+#  Date edited: 07/04/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -105,3 +105,6 @@ print() # add a newline
 # handle mode
 if mode == "repl":
     repl_loop()
+elif mode == "feed":
+    article_man.initiateSchedule("feed")
+    article_man.pollSchedule("feed", 5)

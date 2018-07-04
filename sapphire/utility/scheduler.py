@@ -2,7 +2,7 @@
 #
 #  File: scheduler.py (sapphire.utility)
 #  Date created: 06/30/2018
-#  Date edited: 06/30/2018
+#  Date edited: 07/04/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -28,8 +28,10 @@ def writeSchedule(name, schedule):
         for item in schedule:
             f.write(str(item) + "\n")
 
+# NOTE: also returns the original schedule without the runnable items
 def findRunnable(schedule):
     validSchedule = []
+    nonRunnableLines = []
     
     for item in schedule:
         parts = item.split(' ')
@@ -40,6 +42,7 @@ def findRunnable(schedule):
             #validSchedule.append([' '.join(parts[1:])])
             if isinstance(parts[0], int): validSchedule.append([parts[0], ' '.join(parts[1:])])
             else: validSchedule.append([0, ' '.join(parts)])
+        else:
+            nonRunnableLines.append(item)
                         
-
-    return validSchedule
+    return validSchedule, nonRunnableLines

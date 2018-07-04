@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 07/02/2018
+#  Date edited: 07/04/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -69,12 +69,23 @@ class ArticleManager:
         if parts[0] == "scrape":
             if parts[1] == "feed":
                 self.scrapeFeeds()
-                
-                # return new commands (with times)
+
+                # get the next scrape time
+                if "all" in sapphire.utility.feed_rates:
+                    now = datetime.datetime.now()
+                    then = now + datetime.timedelta(0,sapphire.utility.feed_rates["all"])
+                    return [str(int(then.timestamp())) + " scrape feed", str(int(then.timestamp())) + " queue"]
+                else:
+                    self.log("Polling unavailable, no rates listed in config ('feed_rates')", "ERROR")
             elif parts[1] == "article":
                 self.scrapeNextArticle()
         elif parts[0] == "queue":
             self.consumeQueue()
+
+    def initiateSchedule(self, name):
+        self.log("Creating initial feed scraping schedule")
+        schedule = [str(int(now.timestamp())) + " scrape feed", str(int(now.timestamp())) + " queue"]
+        sapphire.utility.writeSchedule(name, schedule)
         
     # NOTE: rate is in seconds
     def pollSchedule(self, name, rate):
@@ -85,15 +96,14 @@ class ArticleManager:
             print("Last polled at " + polltime + "\r", end='')
             
             schedule = sapphire.utility.scheduler.getSchedule(name)
-            runnableSchedule = sapphire.utility.scheduler.findRunnable(schedule)
+            runnableSchedule, remaining = sapphire.utility.scheduler.findRunnable(schedule)
             for item in runnableSchedule:
                 if item[0] != 0:
                     readableTime = sapphire.utility.getTimestamp(datetime.datetime.fromtimestamp(int(item[0])))
                     self.log("Running '" + item[1] + " scheduled for " + readableTime + "...")
                     newItems = handleCommand()
 
-                    schedule.extend(newItems)
-                    
-
-
+                    remaining.extend(newItems)
+                    sapphire.utility.writeSchedule(name, remaining)
+            
             time.sleep(rate)

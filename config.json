@@ -9,6 +9,7 @@
 	"content_store_dir":"./data/content_store",
 
 	"stats_dir":"./data/stats",
+	"schedule_dir":"./data/schedule",
 	
 	"db_host":"localhost",
 	"db_user":"root",
@@ -33,5 +34,10 @@
 		},
 		"prepend_channel":true,
 		"prepend_source":true
-	}
+	},
+
+	"feed_rates":
+	[
+		"all":60
+	]
 }
