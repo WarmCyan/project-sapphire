@@ -13,6 +13,7 @@
 #***************************************************************************
 
 import time
+import datetime
 
 import sapphire.utility
 import sapphire.utility.logging
@@ -84,8 +85,9 @@ class ArticleManager:
 
     def initiateSchedule(self, name):
         self.log("Creating initial feed scraping schedule")
+        now = datetime.datetime.now()
         schedule = [str(int(now.timestamp())) + " scrape feed", str(int(now.timestamp())) + " queue"]
-        sapphire.utility.writeSchedule(name, schedule)
+        sapphire.utility.scheduler.writeSchedule(name, schedule)
         
     # NOTE: rate is in seconds
     def pollSchedule(self, name, rate):
@@ -93,17 +95,22 @@ class ArticleManager:
 
         while polling:
             pollTime = sapphire.utility.getTimestamp(datetime.datetime.now())
-            print("Last polled at " + polltime + "\r", end='')
+            pollTimeS = str(int(datetime.datetime.now().timestamp()))
+            print("Last polled at " + pollTime + " (" + pollTimeS + ")\r", end='')
             
             schedule = sapphire.utility.scheduler.getSchedule(name)
+            #print(schedule)
             runnableSchedule, remaining = sapphire.utility.scheduler.findRunnable(schedule)
+            #print(runnableSchedule)
             for item in runnableSchedule:
+                #print("Running " + str(item))
                 if item[0] != 0:
                     readableTime = sapphire.utility.getTimestamp(datetime.datetime.fromtimestamp(int(item[0])))
-                    self.log("Running '" + item[1] + " scheduled for " + readableTime + "...")
-                    newItems = handleCommand()
+                    self.log("Running '" + item[1] + "' scheduled for " + readableTime + "...")
+                    newItems = self.handleCommand(item[1], True)
 
-                    remaining.extend(newItems)
-                    sapphire.utility.writeSchedule(name, remaining)
+                    if newItems is not None: remaining.extend(newItems)
+                    sapphire.utility.scheduler.writeSchedule(name, remaining)
+                    print("Resuming poll...\r", end='')
             
             time.sleep(rate)

@@ -38,7 +38,7 @@ db_password = ""
 db_db = ""
 
 
-feed_rates = []
+feed_rates = {}
 
 
 rootUUID = uuid.UUID('{00000000-0000-0000-0000-000000000000}')

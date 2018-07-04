@@ -35,13 +35,10 @@ def findRunnable(schedule):
     
     for item in schedule:
         parts = item.split(' ')
-
+        
         now = datetime.datetime.now()
-        if not isinstance(parts[0], int) or datetime.datetime.fromtimestamp(parts[0]) > now:
-            #validSchedule.append(' '.join(parts[1:]))
-            #validSchedule.append([' '.join(parts[1:])])
-            if isinstance(parts[0], int): validSchedule.append([parts[0], ' '.join(parts[1:])])
-            else: validSchedule.append([0, ' '.join(parts)])
+        if datetime.datetime.fromtimestamp(int(parts[0])) < now:
+            validSchedule.append([parts[0], ' '.join(parts[1:])])
         else:
             nonRunnableLines.append(item)
                         
