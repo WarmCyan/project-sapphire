@@ -80,14 +80,27 @@ class ArticleManager:
                     self.log("Polling unavailable, no rates listed in config ('feed_rates')", "ERROR")
             elif parts[1] == "article":
                 self.scrapeNextArticle()
+
+                if sapphire.utility.content_rate is not None:
+                    now = datetime.datetime.now()
+                    then = now + datetime.timedelta(0,sapphire.utility.content_rate)
+                    return [str(int(then.timestamp())) + " scrape article"]
+                
         elif parts[0] == "queue":
             self.consumeQueue()
 
     def initiateSchedule(self, name):
-        self.log("Creating initial feed scraping schedule")
         now = datetime.datetime.now()
-        schedule = [str(int(now.timestamp())) + " scrape feed", str(int(now.timestamp())) + " queue"]
-        sapphire.utility.scheduler.writeSchedule(name, schedule)
+        # TODO: note that this is only temporary
+        if name == "feed":
+            self.log("Creating initial feed scraping schedule")
+            schedule = [str(int(now.timestamp())) + " scrape feed", str(int(now.timestamp())) + " queue"]
+            sapphire.utility.scheduler.writeSchedule(name, schedule)
+        elif name == "content":
+            self.log("Creating initial content scraping schedule")
+            schedule = [str(int(now.timestamp())) + " scrape article"]
+            sapphire.utility.scheduler.writeSchedule(name, schedule)
+            
         
     # NOTE: rate is in seconds
     def pollSchedule(self, name, rate):

@@ -39,5 +39,7 @@
 	"feed_rates":
 	{
 		"all":60
-	}
+	},
+
+	"content_rate":20
 }

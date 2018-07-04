@@ -108,3 +108,6 @@ if mode == "repl":
 elif mode == "feed":
     article_man.initiateSchedule("feed")
     article_man.pollSchedule("feed", 5)
+elif mode == "content":
+    article_man.initiateSchedule("content")
+    article_man.pollSchedule("content", 5)

@@ -39,6 +39,7 @@ db_db = ""
 
 
 feed_rates = {}
+content_rate = None
 
 
 rootUUID = uuid.UUID('{00000000-0000-0000-0000-000000000000}')
@@ -62,6 +63,7 @@ def readConfig(config):
     global db_db
 
     global feed_rates
+    global content_rate
     
     settings = {}
     with open(config, 'r') as f:
@@ -130,7 +132,9 @@ def readConfig(config):
         registerLogger(logger)
     except: pass
     
-    try: feed_rates = settings["feed_rates"]
+    try: 
+        feed_rates = settings["feed_rates"]
+        content_rate = settings["content_rate"]
     except: pass
 
 def writeConfig():
