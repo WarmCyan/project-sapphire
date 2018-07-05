@@ -38,7 +38,10 @@
 
 	"feed_rates":
 	{
-		"all":60
+		"all":
+		{
+			"times":[2000, 2300]
+		}
 	},
 
 	"content_rate":20

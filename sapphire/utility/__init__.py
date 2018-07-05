@@ -170,6 +170,10 @@ def getFileTimeStamp(dt):
 def getDT(strTime):
     return datetime.datetime.strptime(strTime, "%Y-%m-%d %H:%M:%S")
 
+def getDTFromMilitary(strTime):
+    return datetime.datetime.strptime(strTime, "%H%M")
+    
+
 #def getCurrentTimestamp():
     #return getCorrectTimestamp(datetime.datetime.now())
 

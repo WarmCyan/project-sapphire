@@ -64,16 +64,34 @@ class ArticleManager:
         self.log("Article scrape complete")
 
     # NOTE: this returns any new commands 
-    def handleCommand(self, cmd, poll=False):
+    # rate is the polling rate
+    def handleCommand(self, cmd, poll=False, rate=0):
         parts = cmd.split(' ')
         
         if parts[0] == "scrape":
             if parts[1] == "feed":
                 self.scrapeFeeds()
 
+                nextCommands = []
+
                 # get the next scrape time
                 if "all" in sapphire.utility.feed_rates:
                     now = datetime.datetime.now()
+
+                    if poll:
+                        # determine if this is a specific time
+                        if "times" in sapphire.utility.feed_rates["all"]):
+                            nexttime = 0
+
+                            # loop through each time, if the current time is greater than it, and the last poll was less than it, it was that specified time (or a freaky coincidence)
+                            for time in sapphire.utility.feed_rates["all"]["times"]:
+                                timeDT = sapphire.utility.getDTFromMilitary(time)
+                                if now.timestamp() > timeDT.timestamp() and now.timestamp() - datetime.timedelta(seconds=rate) < timeDT.timestamp():
+                                    #nextCommands.append(str(int(I
+                                    
+                                    
+
+                    
                     then = now + datetime.timedelta(0,sapphire.utility.feed_rates["all"])
                     return [str(int(then.timestamp())) + " scrape feed", str(int(then.timestamp())) + " queue"]
                 else:
