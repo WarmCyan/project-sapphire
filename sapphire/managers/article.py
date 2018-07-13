@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 07/04/2018
+#  Date edited: 07/12/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -80,20 +80,24 @@ class ArticleManager:
 
                     if poll:
                         # determine if this is a specific time
-                        if "times" in sapphire.utility.feed_rates["all"]):
+                        if "times" in sapphire.utility.feed_rates["all"]:
                             nexttime = 0
 
                             # loop through each time, if the current time is greater than it, and the last poll was less than it, it was that specified time (or a freaky coincidence)
                             for time in sapphire.utility.feed_rates["all"]["times"]:
-                                timeDT = sapphire.utility.getDTFromMilitary(time)
-                                if now.timestamp() > timeDT.timestamp() and now.timestamp() - datetime.timedelta(seconds=rate) < timeDT.timestamp():
+                                timeDT = sapphire.utility.getDTFromMilitary(str(time))
+                                prevPollDT = now - datetime.timedelta(seconds=rate)
+                                if now.timestamp() > timeDT.timestamp() and prevPollDT.timestamp() < timeDT.timestamp():
                                     #nextCommands.append(str(int(I
+                                    nexttime = timeDT.timestamp()
+                                    return [str(int(nexttime)) + " scrape feed", str(int(nexttime)) + " queue"]
                                     
                                     
 
                     
-                    then = now + datetime.timedelta(0,sapphire.utility.feed_rates["all"])
-                    return [str(int(then.timestamp())) + " scrape feed", str(int(then.timestamp())) + " queue"]
+                    # old rate method (rather than time based)
+                    #then = now + datetime.timedelta(0,sapphire.utility.feed_rates["all"])
+                    #return [str(int(then.timestamp())) + " scrape feed", str(int(then.timestamp())) + " queue"]
                 else:
                     self.log("Polling unavailable, no rates listed in config ('feed_rates')", "ERROR")
             elif parts[1] == "article":
@@ -111,8 +115,15 @@ class ArticleManager:
         now = datetime.datetime.now()
         # TODO: note that this is only temporary
         if name == "feed":
-            self.log("Creating initial feed scraping schedule")
-            schedule = [str(int(now.timestamp())) + " scrape feed", str(int(now.timestamp())) + " queue"]
+            #self.log("Creating initial feed scraping schedule")
+            #schedule = [str(int(now.timestamp())) + " scrape feed", str(int(now.timestamp())) + " queue"]
+            #sapphire.utility.scheduler.writeSchedule(name, schedule)
+            
+            # find the first instances
+            schedule = []
+            for time in sapphire.utility.feed_rates["all"]["times"]:
+                timedt = sapphire.utility.getDTFromMilitary(str(time))
+                schedule.extend([str(int(timedt.timestamp())) + " scrape feed", str(int(timedt.timestamp())) + " queue"])
             sapphire.utility.scheduler.writeSchedule(name, schedule)
         elif name == "content":
             self.log("Creating initial content scraping schedule")

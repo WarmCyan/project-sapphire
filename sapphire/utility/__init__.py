@@ -171,7 +171,13 @@ def getDT(strTime):
     return datetime.datetime.strptime(strTime, "%Y-%m-%d %H:%M:%S")
 
 def getDTFromMilitary(strTime):
-    return datetime.datetime.strptime(strTime, "%H%M")
+    dt = datetime.datetime.strptime(strTime, "%H%M")
+    now = datetime.datetime.now()
+    #dt.year = now.year
+    #dt.month = now.month
+    #dt.day = now.day
+    dt = dt.replace(year = now.year, month = now.month, day = now.day)
+    return dt
     
 
 #def getCurrentTimestamp():
