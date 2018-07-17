@@ -2,7 +2,7 @@
 #
 #  File: content.py (sapphire.managers)
 #  Date created: 06/16/2018
-#  Date edited: 07/12/2018
+#  Date edited: 07/17/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -58,6 +58,7 @@ class ContentManager:
         self.log("Local content stored")
         humansize, count, size = sapphire.utility.stats.updateFileStats("content_scrape_raw_dir", sapphire.utility.content_scrape_raw_dir)
         humansize2, count2, size2 = sapphire.utility.stats.updateFileStats("content_store_dir", sapphire.utility.content_store_dir)
+        sapphire.utility.stats.updateTotalFileStats()
         
         self.log("Raw content scrape folder contains " + str(count) + " files and takes up " + humansize)
         self.log("Content store folder contains " + str(count2) + " files and takes up " + humansize2)

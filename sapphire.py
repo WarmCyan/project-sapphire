@@ -2,7 +2,7 @@
 #
 #  File: sapphire.py
 #  Date created: 06/21/2018
-#  Date edited: 07/16/2018
+#  Date edited: 07/17/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -27,6 +27,7 @@ COPYRIGHT = "Copyright © 2018 Digital Warrior Labs"
 
 
 execution_unit_name = None
+article_man = None
 
 
 def showHelp():
@@ -35,6 +36,7 @@ def showHelp():
 
 def reportFolderStats(name, folderpath):
     usage, files, size = sapphire.utility.stats.updateFileStats(name, folderpath)
+    sapphire.utility.stats.updateTotalFileStats()
     print("\n" + folderpath + ":")
     print(usage)
     print(str(files) + " files")
@@ -52,6 +54,13 @@ def repl():
         reportFolderStats("metadata_queue_dir", sapphire.utility.metadata_queue_dir)
         reportFolderStats("content_scrape_raw_dir", sapphire.utility.content_scrape_raw_dir)
         reportFolderStats("content_store_dir", sapphire.utility.content_store_dir)
+
+        size, count = sapphire.utility.stats.getTotalFileStats()
+        print("\nTotal: " + count + " files utilizing " + size)
+        return 0
+    # TODO: fix this...
+    elif command == "scrape feed":
+        article_man.scrapeFeeds()
         return 0
     print(pycolor.BRIGHTRED + "Unrecognized command '" + command + "'" + pycolor.RESET)
     return 1

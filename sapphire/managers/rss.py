@@ -2,7 +2,7 @@
 #
 #  File: rss.py (sapphire.managers)
 #  Date created: 05/24/2018
-#  Date edited: 06/22/2018
+#  Date edited: 07/17/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -77,6 +77,7 @@ class RSSManager:
         self.enqueueMetadata(articleMetadata, timestamp)
         humansize, count, size = sapphire.utility.stats.updateFileStats("feed_scrape_tmp_dir", sapphire.utility.feed_scrape_tmp_dir)
         humansize2, count2, size2 = sapphire.utility.stats.updateFileStats("metadata_queue_dir", sapphire.utility.metadata_queue_dir)
+        sapphire.utility.stats.updateTotalFileStats()
         self.log("All scrape metadata saved")
         
         self.log("Temporary metadata backup folder contains " + str(count) + " files and takes up " + humansize)
