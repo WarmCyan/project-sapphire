@@ -57,12 +57,12 @@ def updateFileStats(name, folderpath):
 
     return humansize, count, size # just in case you want to do something with displaying data without recalling calculate function
 
-def updateStatus(self, name, status):
+def updateStatus(name, status):
     if name is not None:
         with open(sapphire.utility.stats_dir + name + "_status", 'w') as file:
             file.write(status)
             
-def updateLastTime(self, name):
+def updateLastTime(name):
     with open(sapphire.utility.stats_dir + name + "_timestamp", 'w') as file:
         file.write(sapphire.utility.getTimestamp(datetime.datetime.now()))
     

@@ -2,7 +2,7 @@
 #
 #  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 07/12/2018
+#  Date edited: 07/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -100,7 +100,8 @@ class RSSScraper:
             
             article = Article()
             article.title = item.title.text
-            article.description = item.description.text.get_text()
+            #article.description = item.description.text.get_text()
+            article.description = item.description.text
             article.timestamp = sapphire.utility.getTimestamp(timestamp)
             article.link = item.link.text
             article.source_name = "Reuters"
