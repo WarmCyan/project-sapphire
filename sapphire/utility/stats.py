@@ -2,7 +2,7 @@
 #
 #  File: stats.py (sapphire.utility)
 #  Date created: 06/21/2018
-#  Date edited: 06/22/2018
+#  Date edited: 07/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -12,6 +12,7 @@
 #***************************************************************************
 
 import os
+import datetime
 
 import sapphire.utility # TODO: is this actually necessary?
 
@@ -55,3 +56,13 @@ def updateFileStats(name, folderpath):
         file.write(str(count))
 
     return humansize, count, size # just in case you want to do something with displaying data without recalling calculate function
+
+def updateStatus(self, name, status):
+    if name is not None:
+        with open(sapphire.utility.stats_dir + name + "_status", 'w') as file:
+            file.write(status)
+            
+def updateLastTime(self, name):
+    with open(sapphire.utility.stats_dir + name + "_timestamp", 'w') as file:
+        file.write(sapphire.utility.getTimestamp(datetime.datetime.now()))
+    

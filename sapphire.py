@@ -2,7 +2,7 @@
 #
 #  File: sapphire.py
 #  Date created: 06/21/2018
-#  Date edited: 07/04/2018
+#  Date edited: 07/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -26,6 +26,7 @@ VERSION_DATE = "06/20/2018"
 COPYRIGHT = "Copyright © 2018 Digital Warrior Labs"
 
 
+execution_unit_name = None
 
 
 def showHelp():
@@ -98,8 +99,10 @@ for f in files:
 for arg in sys.argv[2:]:
     if arg.startswith("--config"):
         config_filename = arg[arg.index('=')+1:]
+    elif arg.startswith("--name"):
+        execution_unit_name = arg[arg.index('=')+1:]
 
-article_man = article.ArticleManager(config_filename)
+article_man = article.ArticleManager(execution_unit_name, config_filename)
 print() # add a newline
 
 # handle mode

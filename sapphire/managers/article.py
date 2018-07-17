@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 07/12/2018
+#  Date edited: 07/16/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -18,6 +18,7 @@ import datetime
 import sapphire.utility
 import sapphire.utility.logging
 import sapphire.utility.scheduler
+import sapphire.utility.stats
 
 from sapphire.managers.rss import RSSManager
 from sapphire.managers.content import ContentManager
@@ -30,8 +31,9 @@ class ArticleManager:
 
 
     # NOTE: config is the path + filename of json config file
-    def __init__(self, config=None):
+    def __init__(self, name=None, config=None):
         if config is not None: self.configure(config)
+        self.name = name
         
         self.log("Initializing article manager...")
         self.rss_man = RSSManager()
@@ -47,20 +49,29 @@ class ArticleManager:
 
     def scrapeFeeds(self):
         self.log("Scraping all feeds...")
+        sapphire.utility.stats.updateStatus(self.name, "Scraping feed...")
+        sapphire.utility.stats.updateLastTime("scrape_feed")
         articles = self.rss_man.scrapeSource('reuters')
         self.rss_man.saveMetadata(articles)
+        sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Feed scrape complete")
 
     def consumeQueue(self):
         self.log("Consuming metadata queue...")
+        sapphire.utility.stats.updateStatus(self.name, "Handling queue...")
+        sapphire.utility.stats.updateLastTime("queue")
         self.meta_man.consumeQueue()
+        sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Queue consumption complete")
 
     def scrapeNextArticle(self):
         self.log("Scraping next article...")
+        sapphire.utility.stats.updateStatus(self.name, "Scraping content...")
+        sapphire.utility.stats.updateLastTime("scrape_content")
         db = DatabaseManager()
         article = db.getFirstLackingArticle()
         self.content_man.scrape(article)
+        sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Article scrape complete")
 
     # NOTE: this returns any new commands 
@@ -139,6 +150,8 @@ class ArticleManager:
             pollTime = sapphire.utility.getTimestamp(datetime.datetime.now())
             pollTimeS = str(int(datetime.datetime.now().timestamp()))
             print("Last polled at " + pollTime + " (" + pollTimeS + ")\r", end='')
+            if self.name is not None:
+                sapphire.utility.stats.updateLastTime(self.name + "_poll")
             
             schedule = sapphire.utility.scheduler.getSchedule(name)
             #print(schedule)
