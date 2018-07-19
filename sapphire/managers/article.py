@@ -73,6 +73,13 @@ class ArticleManager:
         self.content_man.scrape(article)
         sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Article scrape complete")
+         
+
+
+
+
+    # TODO: TODO: TODO: all of this should get moved to sapphire.py instead
+
 
     # NOTE: this returns any new commands 
     # rate is the polling rate
@@ -121,6 +128,9 @@ class ArticleManager:
                 
         elif parts[0] == "queue":
             self.consumeQueue()
+        elif parts[0] == "record":
+            if parts[1] == "stats":
+                sapphire.utility.stats.recordAllSpaceStats()
 
     def initiateSchedule(self, name):
         now = datetime.datetime.now()
@@ -140,6 +150,10 @@ class ArticleManager:
             self.log("Creating initial content scraping schedule")
             schedule = [str(int(now.timestamp())) + " scrape article"]
             sapphire.utility.scheduler.writeSchedule(name, schedule)
+        elif name == "utility":
+            self.log("Creating initial utility schedule")
+            # TODO: TODO: TODO: add things to config and utility then create schedule here
+            
             
         
     # NOTE: rate is in seconds
