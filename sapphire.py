@@ -2,7 +2,7 @@
 #
 #  File: sapphire.py
 #  Date created: 06/21/2018
-#  Date edited: 07/17/2018
+#  Date edited: 07/19/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -61,6 +61,9 @@ def repl():
     # TODO: fix this...
     elif command == "scrape feed":
         article_man.scrapeFeeds()
+        return 0
+    elif command == "record stats":
+        sapphire.utility.stats.recordAllSpaceStats()
         return 0
     print(pycolor.BRIGHTRED + "Unrecognized command '" + command + "'" + pycolor.RESET)
     return 1

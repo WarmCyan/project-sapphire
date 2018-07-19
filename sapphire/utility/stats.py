@@ -2,7 +2,7 @@
 #
 #  File: stats.py (sapphire.utility)
 #  Date created: 06/21/2018
-#  Date edited: 07/17/2018
+#  Date edited: 07/19/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -13,6 +13,8 @@
 
 import os
 import datetime
+import csv
+import pandas as pd
 
 import sapphire.utility # TODO: is this actually necessary?
 
@@ -108,3 +110,37 @@ def updateLastTime(name):
     with open(sapphire.utility.stats_dir + name + "_timestamp", 'w') as file:
         file.write(sapphire.utility.getTimestamp(datetime.datetime.now()))
     
+def recordAllSpaceStats():
+    spaceStatsTimeline = sapphire.utility.stats_dir + "space_stats_timeline.csv"
+    
+    
+    # get a listing of all files to keep a record of
+    filesList = []
+    statsNames = []
+
+    for entry in os.scandir(sapphire.utility.stats_dir):
+        if entry.is_file() and (entry.name.endswith("_filesize_raw") or entry.name.endswith("_filecount")):
+            filesList.append(entry.path)
+            statsNames.append(entry.name)
+
+    statsNames.append("time")
+
+    # get the row of data from each individual file
+    row = {}
+    row["time"] = int(datetime.datetime.now().timestamp())
+    for i in range(0, len(filesList)):
+        with open(filesList[i], 'r') as file:
+            row[statsNames[i]] = int(file.read())
+    
+    # make the timeline file if it doesn't exist   
+    if not os.path.exists(spaceStatsTimeline):
+        sapphire.utility.logging.log("Timeline file doesn't exist, creating '" + spaceStatsTimeline + "'...", "WARNING", source="Utility")
+        with open(spaceStatsTimeline, 'a') as csv_file:
+            writer = csv.DictWriter(csv_file, delimiter=',', lineterminator='\n',fieldnames=statsNames)
+            writer.writeheader()
+
+    # read in the csv, add new row to it, and write it back out
+    table = pd.read_csv(spaceStatsTimeline)
+    rowFrame = pd.io.json.json_normalize(row)
+    table = pd.concat([table, rowFrame])
+    table.to_csv(spaceStatsTimeline, index=False)            
