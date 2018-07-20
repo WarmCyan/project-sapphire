@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 07/16/2018
+#  Date edited: 07/19/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -153,6 +153,10 @@ class ArticleManager:
         elif name == "utility":
             self.log("Creating initial utility schedule")
             # TODO: TODO: TODO: add things to config and utility then create schedule here
+            timedt = sapphire.utility.getDTFromMilitary(str(sapphire.utility.timeline_times["space"]))
+            schedule = [str(int(timedt.timestamp())) + " record stats"]
+            sapphire.utility.scheduler.writeSchedule(name, schedule)
+            
             
             
         

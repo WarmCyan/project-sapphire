@@ -44,5 +44,10 @@
 		}
 	},
 
-	"content_rate":20
+	"content_rate":20,
+
+	"timeline_times":
+	{
+		"space":[400]
+	}
 }

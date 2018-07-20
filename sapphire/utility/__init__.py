@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 07/04/2018
+#  Date edited: 07/19/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -40,6 +40,7 @@ db_db = ""
 
 feed_rates = {}
 content_rate = None
+timeline_times = {}
 
 
 rootUUID = uuid.UUID('{00000000-0000-0000-0000-000000000000}')
@@ -133,8 +134,10 @@ def readConfig(config):
     except: pass
     
     try: 
+        # TODO: these should each probably be broken out into their own
         feed_rates = settings["feed_rates"]
         content_rate = settings["content_rate"]
+        timeline_times = settings["timeline_times"]
     except: pass
 
 def writeConfig():
