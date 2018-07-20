@@ -2,7 +2,7 @@
 #
 #  File: content.py (sapphire.managers)
 #  Date created: 06/16/2018
-#  Date edited: 07/17/2018
+#  Date edited: 07/20/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -34,7 +34,13 @@ class ContentManager:
         self.log("Initializing content manager...")
         self.sources_list["Reuters"] = reuters_v1.ContentScraper()
         self.log("Initialized")
-
+        
+    def testScraper(self, article):
+        self.log("Running a test scrape for source '" + article.source_name + "' - " + article.UUID)
+        scraper = self.sources_list[article.source_name]
+        content, scrape_time = scraper.run(article.link, article.UUID)
+        print(content)
+        
 
     def scrape(self, article):
         self.log("Initiating scrape for source '" + article.source_name + "' - " + article.UUID)

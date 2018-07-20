@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 07/19/2018
+#  Date edited: 07/20/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -73,117 +73,9 @@ class ArticleManager:
         self.content_man.scrape(article)
         sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Article scrape complete")
-         
 
-
-
-
-    # TODO: TODO: TODO: all of this should get moved to sapphire.py instead
-
-
-    # NOTE: this returns any new commands 
-    # rate is the polling rate
-    def handleCommand(self, cmd, poll=False, rate=0):
-        parts = cmd.split(' ')
-        
-        if parts[0] == "scrape":
-            if parts[1] == "feed":
-                self.scrapeFeeds()
-
-                nextCommands = []
-
-                # get the next scrape time
-                if "all" in sapphire.utility.feed_rates:
-                    now = datetime.datetime.now()
-
-                    if poll:
-                        # determine if this is a specific time
-                        if "times" in sapphire.utility.feed_rates["all"]:
-                            nexttime = 0
-
-                            # loop through each time, if the current time is greater than it, and the last poll was less than it, it was that specified time (or a freaky coincidence)
-                            for time in sapphire.utility.feed_rates["all"]["times"]:
-                                timeDT = sapphire.utility.getDTFromMilitary(str(time))
-                                prevPollDT = now - datetime.timedelta(seconds=rate)
-                                if now.timestamp() > timeDT.timestamp() and prevPollDT.timestamp() < timeDT.timestamp():
-                                    #nextCommands.append(str(int(I
-                                    nexttime = timeDT.timestamp()
-                                    return [str(int(nexttime)) + " scrape feed", str(int(nexttime)) + " queue"]
-                                    
-                                    
-
-                    
-                    # old rate method (rather than time based)
-                    #then = now + datetime.timedelta(0,sapphire.utility.feed_rates["all"])
-                    #return [str(int(then.timestamp())) + " scrape feed", str(int(then.timestamp())) + " queue"]
-                else:
-                    self.log("Polling unavailable, no rates listed in config ('feed_rates')", "ERROR")
-            elif parts[1] == "article":
-                self.scrapeNextArticle()
-
-                if sapphire.utility.content_rate is not None:
-                    now = datetime.datetime.now()
-                    then = now + datetime.timedelta(0,sapphire.utility.content_rate)
-                    return [str(int(then.timestamp())) + " scrape article"]
-                
-        elif parts[0] == "queue":
-            self.consumeQueue()
-        elif parts[0] == "record":
-            if parts[1] == "stats":
-                sapphire.utility.stats.recordAllSpaceStats()
-
-    def initiateSchedule(self, name):
-        now = datetime.datetime.now()
-        # TODO: note that this is only temporary
-        if name == "feed":
-            #self.log("Creating initial feed scraping schedule")
-            #schedule = [str(int(now.timestamp())) + " scrape feed", str(int(now.timestamp())) + " queue"]
-            #sapphire.utility.scheduler.writeSchedule(name, schedule)
-            
-            # find the first instances
-            schedule = []
-            for time in sapphire.utility.feed_rates["all"]["times"]:
-                timedt = sapphire.utility.getDTFromMilitary(str(time))
-                schedule.extend([str(int(timedt.timestamp())) + " scrape feed", str(int(timedt.timestamp())) + " queue"])
-            sapphire.utility.scheduler.writeSchedule(name, schedule)
-        elif name == "content":
-            self.log("Creating initial content scraping schedule")
-            schedule = [str(int(now.timestamp())) + " scrape article"]
-            sapphire.utility.scheduler.writeSchedule(name, schedule)
-        elif name == "utility":
-            self.log("Creating initial utility schedule")
-            # TODO: TODO: TODO: add things to config and utility then create schedule here
-            timedt = sapphire.utility.getDTFromMilitary(str(sapphire.utility.timeline_times["space"]))
-            schedule = [str(int(timedt.timestamp())) + " record stats"]
-            sapphire.utility.scheduler.writeSchedule(name, schedule)
-            
-            
-            
-        
-    # NOTE: rate is in seconds
-    def pollSchedule(self, name, rate):
-        polling = True
-
-        while polling:
-            pollTime = sapphire.utility.getTimestamp(datetime.datetime.now())
-            pollTimeS = str(int(datetime.datetime.now().timestamp()))
-            print("Last polled at " + pollTime + " (" + pollTimeS + ")\r", end='')
-            if self.name is not None:
-                sapphire.utility.stats.updateLastTime(self.name + "_poll")
-            
-            schedule = sapphire.utility.scheduler.getSchedule(name)
-            #print(schedule)
-            runnableSchedule, remaining = sapphire.utility.scheduler.findRunnable(schedule)
-            #print(runnableSchedule)
-            for item in runnableSchedule:
-                #print("Running " + str(item))
-                if item[0] != 0:
-                    readableTime = sapphire.utility.getTimestamp(datetime.datetime.fromtimestamp(int(item[0])))
-                    self.log("Running '" + item[1] + "' scheduled for " + readableTime + "...")
-                    newItems = self.handleCommand(item[1], True)
-
-                    if newItems is not None: remaining.extend(newItems)
-                    sapphire.utility.scheduler.writeSchedule(name, remaining)
-                    print("Resuming poll...\r", end='')
-            
-            time.sleep(rate)
+    def testScrapeNextArticle(self):
+        self.log("Testing content scraper on next article...")
+        db = DatabaseManager()
+        article = db.getFirstLackingArticle()
+        self.content_man.testScraper(article)

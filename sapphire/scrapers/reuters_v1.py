@@ -2,7 +2,7 @@
 #
 #  File: reuters_v1.py (sapphire.scrapers)
 #  Date created: 05/17/2018
-#  Date edited: 07/16/2018
+#  Date edited: 07/20/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -167,8 +167,9 @@ class ContentScraper:
         soup = BeautifulSoup(self.page, "lxml")
 
         # query down to find content paragraph tags
-        content_container = soup.find_all(attrs={"class":re.compile("container\w*\ content")}, limit=1)[0]
-        body = content_container.find_all(attrs={"class":re.compile("body")}, limit=1)[0]
+        #content_container = soup.find_all(attrs={"class":re.compile("container\w*\ content")}, limit=1)[0]
+        #body = content_container.find_all(attrs={"class":re.compile("body")}, limit=1)[0]
+        body = soup.find_all(attrs={"class":"StandardArticleBody_body"}, limit=1)[0]
         paragraphs = body.find_all('p')[:-1] # don't include last, it's just reporting
 
         # concatenate/clean each paragraph
