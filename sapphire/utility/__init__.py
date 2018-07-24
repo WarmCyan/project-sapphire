@@ -65,6 +65,7 @@ def readConfig(config):
 
     global feed_rates
     global content_rate
+    global timeline_times
     
     settings = {}
     with open(config, 'r') as f:

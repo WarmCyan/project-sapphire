@@ -48,6 +48,6 @@
 
 	"timeline_times":
 	{
-		"space":[400]
+		"space":[400, 2037]
 	}
 }

@@ -2,7 +2,7 @@
 #
 #  File: sapphire.py
 #  Date created: 06/21/2018
-#  Date edited: 07/20/2018
+#  Date edited: 07/23/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -58,9 +58,13 @@ def initiateSchedule(name):
         schedule = [str(int(now.timestamp())) + " scrape article"]
         sapphire.utility.scheduler.writeSchedule(name, schedule)
     elif name == "utility":
-        timedt = sapphire.utility.getDTFromMilitary(str(sapphire.utility.timeline_times["space"]))
-        schedule = [str(int(timedt.timestamp())) + " record stats"]
-        sapphire.utility.scheduler.writeSchedule(name, schedule)
+        schedule = []
+        for entry in sapphire.utility.timeline_times["space"]:
+            timedt = sapphire.utility.getDTFromMilitary(str(entry))
+            if timedt < datetime.datetime.now():
+                timedt += datetime.timedelta(1)
+            schedule.append(str(int(timedt.timestamp())) + " record stats")
+            sapphire.utility.scheduler.writeSchedule(name, schedule)
         
 # NOTE: rate is in seconds
 def pollSchedule(name, rate):
@@ -145,7 +149,13 @@ def handleCommand(cmd, poll=False, rate=0):
         return 0
     elif parts[0] == "record":
         if parts[1] == "stats":
+            print("Recording all space stats...")
             sapphire.utility.stats.recordAllSpaceStats()
+            if poll:
+                # get the next scrape time
+                now = datetime.datetime.now()
+                nexttime = now + datetime.timedelta(1)
+                return [str(int(nexttime.timestamp())) + " record stats"]
             return 0
     elif parts[0] == "test":
         if parts[1] == "article":
@@ -217,3 +227,6 @@ elif mode == "feed":
 elif mode == "content":
     initiateSchedule("content")
     pollSchedule("content", 5)
+elif mode == "utility":
+    initiateSchedule("utility")
+    pollSchedule("utility", 5)
