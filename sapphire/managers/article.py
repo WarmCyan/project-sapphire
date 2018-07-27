@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 07/20/2018
+#  Date edited: 07/27/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -14,6 +14,7 @@
 
 import time
 import datetime
+import traceback
 
 import sapphire.utility
 import sapphire.utility.logging
@@ -51,8 +52,17 @@ class ArticleManager:
         self.log("Scraping all feeds...")
         sapphire.utility.stats.updateStatus(self.name, "Scraping feed...")
         sapphire.utility.stats.updateLastTime("scrape_feed")
-        articles = self.rss_man.scrapeSource('reuters')
-        self.rss_man.saveMetadata(articles)
+        
+        try:
+            articles = self.rss_man.scrapeSource('reuters')
+            self.rss_man.saveMetadata(articles)
+        except:
+            self.log("Scrape failed", "ERROR")
+            sapphire.utility.stats.updateStatus(self.name, "ERROR - Scrape failed")
+            tracepack.print_exc()
+            tracepack.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
+            exit()
+            
         sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Feed scrape complete")
 
@@ -60,7 +70,16 @@ class ArticleManager:
         self.log("Consuming metadata queue...")
         sapphire.utility.stats.updateStatus(self.name, "Handling queue...")
         sapphire.utility.stats.updateLastTime("queue")
-        self.meta_man.consumeQueue()
+
+        try:
+            self.meta_man.consumeQueue()
+        except:
+            self.log("Queue consumption failed", "ERROR")
+            sapphire.utility.stats.updateStatus(self.name, "ERROR - Queue consumption failed")
+            tracepack.print_exc()
+            tracepack.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
+            exit()
+            
         sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Queue consumption complete")
 
@@ -69,8 +88,18 @@ class ArticleManager:
         sapphire.utility.stats.updateStatus(self.name, "Scraping content...")
         sapphire.utility.stats.updateLastTime("scrape_content")
         db = DatabaseManager()
-        article = db.getFirstLackingArticle()
-        self.content_man.scrape(article)
+        #article = db.getFirstLackingArticle()
+        article = db.getRecentLackingArticle()
+
+        try:
+            self.content_man.scrape(article)
+        except:
+            self.log("Content scrape failed", "ERROR")
+            sapphire.utility.stats.updateStatus(self.name, "ERROR - Content scrape failed")
+            tracepack.print_exc()
+            tracepack.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
+            exit()
+            
         sapphire.utility.stats.updateStatus(self.name, "Idle")
         self.log("Article scrape complete")
 

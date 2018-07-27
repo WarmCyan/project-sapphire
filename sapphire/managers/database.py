@@ -2,7 +2,7 @@
 #
 #  File: database.py (sapphire.managers)
 #  Date created: 05/29/2018
-#  Date edited: 06/16/2018
+#  Date edited: 07/27/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -115,6 +115,14 @@ class DatabaseManager:
     # NOTE: returns first article without content
     def getFirstLackingArticle(self):
         findQuery = '''SELECT * FROM Articles WHERE content IS NULL LIMIT 1''' 
+        self.cur.execute(findQuery)
+        article_row = self.cur.fetchone()
+        article = Article()
+        article.populateFromRow(article_row)
+        return article
+    
+    def getRecentLackingArticle(self):
+        findQuery = '''SELECT * FROM Articles WHERE content IS NULL LIMIT 1 ORDER BY timestamp DESC''' 
         self.cur.execute(findQuery)
         article_row = self.cur.fetchone()
         article = Article()
