@@ -23,8 +23,8 @@ import sapphire.utility.stats
 
 
 
-VERSION = "0.1.0"
-VERSION_DATE = "06/20/2018"
+VERSION = "1.0.0"
+VERSION_DATE = "07/27/2018"
 COPYRIGHT = "Copyright © 2018 Digital Warrior Labs"
 
 
