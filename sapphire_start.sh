@@ -4,7 +4,7 @@ tmux new-session -d -s sapphire-backend
 
 tmux split-window -t sapphire-backend:0 -h 
 tmux split-window -t sapphire-backend:0 -h
-tmux select-layout even-horizontal -t sapphire-backend:0
+tmux select-layout -t sapphire-backend:0 even-horizontal 
 
 tmux send-keys -t sapphire-backend:0.0 'feed.sh' Enter
 tmux send-keys -t sapphire-backend:0.1 'content.sh' Enter
