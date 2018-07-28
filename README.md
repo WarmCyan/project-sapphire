@@ -27,10 +27,13 @@ News aggregation, statistics, analysis, and dashboard system
 
 # Requirements
 
+* Python 3.5+
+* MySQL
+
 Uses the following python packages:
 * BeautifulSoup (bs4)
 * pycolor
   [https://bitbucket.org/WildfireXIII/libpy-pycolor](https://bitbucket.org/WildfireXIII/libpy-pycolor)
-* Pandas
+* pandas
 * mysqlclient
 * pytz
