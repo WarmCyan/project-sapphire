@@ -20,11 +20,9 @@ News aggregation, statistics, analysis, and dashboard system
 	* Top News
 	* US News
 	* World News
-* **Bloomberg**
+* **Bloomberg** (not yet written)
 	* _Politics_ [https://www.bloomberg.com/politics/feeds/site.xml](https://www.bloomberg.com/politics/feeds/site.xml)
-* **NPR**
-
-## Twitter sources
+* **NPR** (not yet written)
 
 
 # Requirements
@@ -35,3 +33,4 @@ Uses the following python packages:
   [https://bitbucket.org/WildfireXIII/libpy-pycolor](https://bitbucket.org/WildfireXIII/libpy-pycolor)
 * Pandas
 * mysqlclient
+* pytz
