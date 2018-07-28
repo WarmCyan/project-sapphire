@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python sapphire.py util --name=util
+python3 sapphire.py util --name=util

@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python sapphire.py feed --name=feed
+python3 sapphire.py feed --name=feed

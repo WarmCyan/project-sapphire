@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python sapphire.py repl
+python3 sapphire.py repl
