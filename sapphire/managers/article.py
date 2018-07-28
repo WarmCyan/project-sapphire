@@ -2,7 +2,7 @@
 #
 #  File: article.py (sapphire.managers)
 #  Date created: 06/20/2018
-#  Date edited: 07/27/2018
+#  Date edited: 07/28/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -59,8 +59,8 @@ class ArticleManager:
         except:
             self.log("Scrape failed", "ERROR")
             sapphire.utility.stats.updateStatus(self.name, "ERROR - Scrape failed")
-            tracepack.print_exc()
-            tracepack.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
+            traceback.print_exc()
+            traceback.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
             exit()
             
         sapphire.utility.stats.updateStatus(self.name, "Idle")
@@ -76,8 +76,8 @@ class ArticleManager:
         except:
             self.log("Queue consumption failed", "ERROR")
             sapphire.utility.stats.updateStatus(self.name, "ERROR - Queue consumption failed")
-            tracepack.print_exc()
-            tracepack.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
+            traceback.print_exc()
+            traceback.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
             exit()
             
         sapphire.utility.stats.updateStatus(self.name, "Idle")
@@ -96,8 +96,8 @@ class ArticleManager:
         except:
             self.log("Content scrape failed", "ERROR")
             sapphire.utility.stats.updateStatus(self.name, "ERROR - Content scrape failed")
-            tracepack.print_exc()
-            tracepack.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
+            traceback.print_exc()
+            traceback.print_exc(file=sapphire.utility.stats_dir + self.name + "_error.log")
             exit()
             
         sapphire.utility.stats.updateStatus(self.name, "Idle")

@@ -24,7 +24,7 @@ import sapphire.utility.stats
 
 
 VERSION = "1.0.0"
-VERSION_DATE = "07/27/2018"
+VERSION_DATE = "07/28/2018"
 COPYRIGHT = "Copyright © 2018 Digital Warrior Labs"
 
 
@@ -52,6 +52,8 @@ def initiateSchedule(name):
         schedule = []
         for time in sapphire.utility.feed_rates["all"]["times"]:
             timedt = sapphire.utility.getDTFromMilitary(str(time))
+            if timedt < datetime.datetime.now():
+                timedt += datetime.timedelta(1)
             schedule.extend([str(int(timedt.timestamp())) + " scrape feed", str(int(timedt.timestamp())) + " queue"])
         sapphire.utility.scheduler.writeSchedule(name, schedule)
     elif name == "content":

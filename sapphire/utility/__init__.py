@@ -161,7 +161,10 @@ def _getFileFormattedTimestamp(dt):
 
 def _getUTCTime(dt):
     #dt = dt.astimezone(timezone('UTC'))
-    dt = timezone('UTC').localize(dt)
+    if dt.tzinfo is not None:
+        dt = dt.astimezone(timezone('UTC'))
+    else:
+        dt = timezone('UTC').localize(dt)
     return dt
 
 
