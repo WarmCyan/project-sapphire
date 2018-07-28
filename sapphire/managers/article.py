@@ -91,6 +91,11 @@ class ArticleManager:
         #article = db.getFirstLackingArticle()
         article = db.getRecentLackingArticle()
 
+        if article == False:
+            self.log("No articles currently lacking content, rejecting scrape request")
+            sapphire.utility.stats.updateStatus(self.name, "Idle")
+            return
+
         try:
             self.content_man.scrape(article)
         except:

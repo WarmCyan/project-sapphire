@@ -2,7 +2,7 @@
 #
 #  File: database.py (sapphire.managers)
 #  Date created: 05/29/2018
-#  Date edited: 07/27/2018
+#  Date edited: 07/28/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -111,9 +111,17 @@ class DatabaseManager:
         self.cur.execute(updateQuery, (article.title, article.description, article.timestamp, article.link, article.source_name, article.source_type, article.source_sub, article.source_explicit, article.meta_scrape_time, article.meta_scrape_identifier, article.content, article.content_scrape_time, article.content_scrape_identifier, article.UUID))
         self.db.commit()
         self.log("Article updated in database")
+    
+    def getLackingArticleCount(self):
+        findQuery = '''SELECT COUNT(*) FROM Articles WHERE content IS NULL''' 
+        self.cur.execute(findQuery)
+        count = self.cur.fetchone()[0]
+        return count
 
     # NOTE: returns first article without content
     def getFirstLackingArticle(self):
+        if self.getLackingArticleCount() == 0: return False
+        
         findQuery = '''SELECT * FROM Articles WHERE content IS NULL LIMIT 1''' 
         self.cur.execute(findQuery)
         article_row = self.cur.fetchone()
@@ -122,7 +130,9 @@ class DatabaseManager:
         return article
     
     def getRecentLackingArticle(self):
-        findQuery = '''SELECT * FROM Articles WHERE content IS NULL LIMIT 1 ORDER BY timestamp DESC''' 
+        if self.getLackingArticleCount() == 0: return False
+        
+        findQuery = '''SELECT * FROM Articles WHERE content IS NULL ORDER BY timestamp DESC LIMIT 1''' 
         self.cur.execute(findQuery)
         article_row = self.cur.fetchone()
         article = Article()
