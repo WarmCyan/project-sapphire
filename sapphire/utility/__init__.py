@@ -2,7 +2,7 @@
 #
 #  File: __init__.py (sapphire.utility)
 #  Date created: 05/17/2018
-#  Date edited: 07/19/2018
+#  Date edited: 07/28/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -160,7 +160,8 @@ def _getFileFormattedTimestamp(dt):
     return dt.strftime("%Y.%m.%d_%H.%M.%S")
 
 def _getUTCTime(dt):
-    dt = dt.astimezone(timezone('UTC'))
+    #dt = dt.astimezone(timezone('UTC'))
+    dt = timezone('UTC').localize(dt)
     return dt
 
 
