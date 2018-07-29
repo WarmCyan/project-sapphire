@@ -2,7 +2,7 @@
 #
 #  File: stats.py (sapphire.utility)
 #  Date created: 06/21/2018
-#  Date edited: 07/19/2018
+#  Date edited: 07/29/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -142,5 +142,5 @@ def recordAllSpaceStats():
     # read in the csv, add new row to it, and write it back out
     table = pd.read_csv(spaceStatsTimeline)
     rowFrame = pd.io.json.json_normalize(row)
-    table = pd.concat([table, rowFrame])
+    table = pd.concat([table, rowFrame], sort=False)
     table.to_csv(spaceStatsTimeline, index=False)            

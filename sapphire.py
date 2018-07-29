@@ -2,7 +2,7 @@
 #
 #  File: sapphire.py
 #  Date created: 06/21/2018
-#  Date edited: 07/28/2018
+#  Date edited: 07/29/2018
 #
 #  Author: Nathan Martindale
 #  Copyright © 2018 Digital Warrior Labs
@@ -22,15 +22,12 @@ import sapphire.utility
 import sapphire.utility.stats
 
 
-
-VERSION = "1.0.0"
-VERSION_DATE = "07/28/2018"
+VERSION = "1.0.1"
+VERSION_DATE = "07/29/2018"
 COPYRIGHT = "Copyright © 2018 Digital Warrior Labs"
-
 
 execution_unit_name = None
 article_man = None
-
 
 def showHelp():
     print("This is the help menu")
@@ -118,7 +115,13 @@ def handleCommand(cmd, poll=False, rate=0):
 
             if poll:
                 nextCommands = []
+                
                 # get the next scrape time
+                now = datetime.datetime.now()
+                nexttime = now + datetime.timedelta(1)
+                nexttime = nexttime.timestamp()
+                return [str(int(nexttime)) + " scrape feed", str(int(nexttime)) + " queue"]
+                '''
                 if "all" in sapphire.utility.feed_rates:
                     now = datetime.datetime.now()
 
@@ -134,6 +137,7 @@ def handleCommand(cmd, poll=False, rate=0):
                                 #nextCommands.append(str(int(I
                                 nexttime = timeDT.timestamp()
                                 return [str(int(nexttime)) + " scrape feed", str(int(nexttime)) + " queue"]
+                '''
             else: return 0
                             
         elif parts[1] == "article":
