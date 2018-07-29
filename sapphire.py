@@ -84,7 +84,7 @@ def pollSchedule(name, rate):
                 print("Running '" + item[1] + "' scheduled for " + readableTime + "...")
                 newItems = handleCommand(item[1], True, rate)
 
-                if newItems is not None and !isinstance(newItems, int): remaining.extend(newItems)
+                if newItems is not None and not isinstance(newItems, int): remaining.extend(newItems)
                 sapphire.utility.scheduler.writeSchedule(name, remaining)
                 print("Resuming poll...\r", end='')
         
