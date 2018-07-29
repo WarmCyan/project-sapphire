@@ -32,7 +32,11 @@ class DatabaseManager:
     def connect(self):
         self.log("Connecting to database...")
         self.db = MySQLdb.connect(host=sapphire.utility.db_host, user=sapphire.utility.db_user, passwd=sapphire.utility.db_password, db=sapphire.utility.db_db)
+        self.db.set_character_set('utf8')
         self.cur = self.db.cursor()
+        self.cur.execute('SET NAMES utf8;')
+        self.cur.execute('SET CHARACTER SET utf8;')
+        self.cur.execute('SET character_set_connection=utf8;')
         self.log("Connection established")
 
     def tableCheck(self):
