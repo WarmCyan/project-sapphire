@@ -58,7 +58,7 @@ function getExecutionUnits()
 		if ($result == 1)
 		{
 			// read the content of the file
-			$timestamp = file_get_contents(getStatsDir() . $file;
+			$timestamp = file_get_contents(getStatsDir() . $file);
 			
 			// store info in array
 			$unitName = $matches[1];
