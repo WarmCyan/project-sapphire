@@ -13,6 +13,11 @@
 //***************************************************************************
 
 include_once('../includes/utility.php');
+include_once('../templates/header.php');
+include_once('../templates/footer.php');
+
+
+getHeader("Sapphire");
 
 ?>
 
@@ -30,3 +35,5 @@ include_once('../includes/utility.php');
 	}
 
 ?>
+
+<?php getFooter(); ?>

@@ -1,3 +1,4 @@
 *.pyc
 data/*
 !data/ph.txt
+experiments/frontend/*.png
