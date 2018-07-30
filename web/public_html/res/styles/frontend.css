@@ -1,13 +1,30 @@
+@font-face
+{
+	font-family: 'DroidSans';
+	src: url('../fonts/DroidSans.ttf') format('truetype'),
+	url('../fonts/DroidSans.eot') format('embedded-opentype');
+	font-weight: normal;
+	font-style: normal;
+}
+@font-face
+{
+	font-family: 'DroidSansBold';
+	src: url('../fonts/DroidSans-Bold.ttf') format('truetype');
+}
+
+
 body
 {
 	background-color: #212128;
 	margin: 0px;
+	font-family: DroidSans, Arial;
+	color: white;
 }
 
 #header
 {
 	padding: 10px;
-	border-bottom: 1px solid silver;
+	border-bottom: 1px solid #444454;
 	margin: 0px;
 	display: block;
 }
