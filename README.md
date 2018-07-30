@@ -2,7 +2,7 @@
 
 News aggregation, statistics, analysis, and dashboard system
 
-[http://dwl-sapphire.ddns.net](dwl-sapphire.ddns.net)
+[dwl-sapphire.ddns.net](http://dwl-sapphire.ddns.net)
 
 # Sources
 
