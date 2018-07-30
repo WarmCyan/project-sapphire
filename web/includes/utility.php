@@ -30,6 +30,8 @@ function endsWith($haystack, $needle)
 
 function readConfig()
 {
+	global $configJson;
+	
 	$configString = file_get_contents("/home/dwl/conf/sapphire_config.json");
 	$configJson = json_decode($configString, true);
 }
@@ -38,6 +40,8 @@ function checkLazyLoadConfig() { if (!$configJson) { readConfig(); } }
 
 function getStatsDir()
 {
+	global $configJson;
+	
 	checkLazyLoadConfig();
 	if (!endsWith($configJson, '/')) { $configJson['stats_dir'] .= '/'; }
 
@@ -47,14 +51,14 @@ function getStatsDir()
 function getExecutionUnits()
 {
 	$units = array();
-	
+
 	// get all files in stats dir
 	$files = scandir(getStatsDir());
 	foreach($files as $file)
 	{
 		// check if status file
 		$matches = array();
-		$result = preg_match("([\w|_]*)_status", $file, $matches);
+		$result = preg_match("/([\w|\_]*)\_status/", $file, $matches);
 		if ($result == 1)
 		{
 			// read the content of the file
@@ -68,7 +72,7 @@ function getExecutionUnits()
 		
 		// check if poll timestamp
 		$matches = array();
-		$result = preg_match("([\w|_]*)_poll_timestamp", $file, $matches);
+		$result = preg_match("/([\w|_]*)_poll_timestamp/", $file, $matches);
 		if ($result == 1)
 		{
 			// read the content of the file
