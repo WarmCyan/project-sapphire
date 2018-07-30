@@ -46,3 +46,16 @@ body
 	margin-right: 10px;
 	opacity: .5;
 }
+
+#content
+{
+	margin: 20px;
+}
+
+#stats_box
+{
+	padding: 20px;
+	width: 300px;
+	background-color: #CCCCCC;
+	color: #111122;
+}
