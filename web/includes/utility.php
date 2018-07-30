@@ -12,7 +12,7 @@
 //
 //***************************************************************************
 
-$configJson = false
+$configJson = false;
 
 function readConfig()
 {
