@@ -44,7 +44,7 @@ function getExecutionUnits()
 		if ($result == 1)
 		{
 			// read the content of the file
-			$status = file_get_contents(getStatsDir() . $file;
+			$status = file_get_contents(getStatsDir() . $file);
 			
 			// store info in array
 			$unitName = $matches[1];
