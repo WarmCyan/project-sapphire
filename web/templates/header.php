@@ -14,7 +14,7 @@
 
 function getHeader($title)
 {
-	$html <<<HTML
+	$html = <<<HTML
 
 <html>
 	<head>

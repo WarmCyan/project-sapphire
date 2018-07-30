@@ -14,7 +14,7 @@
 
 function getFooter()
 {
-	$html <<<HTML
+	$html = <<<HTML
 		</div> <!-- /content -->
 	</body>
 </html>
