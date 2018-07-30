@@ -18,11 +18,11 @@ include_once('../includes/utility.php');
 
 <h1>Hello World!</h1>
 
-<h3>Execution Units<h3>
+<h2>Execution Units</h2>
 <?php 
 	$units = getExecutionUnits();
 	
-	foreach ($units as $name)
+	foreach ($units as $name => $info)
 	{
 		echo("<p><b>Unit '" . $name . "'</b></p>");
 		echo("<p>&nbsp;&nbsp;Status: " . $units[$name]["status"] . "</p>");
