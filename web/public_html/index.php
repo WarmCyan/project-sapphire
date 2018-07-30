@@ -18,4 +18,15 @@ include_once('../includes/utility.php');
 
 <h1>Hello World!</h1>
 
-<?php var_dump(getExecutionUnits()); ?>
+<h3>Execution Units<h3>
+<?php 
+	$units = getExecutionUnits();
+	
+	foreach ($units as $name)
+	{
+		echo("<p><b>Unit '" . $name . "'</b></p>");
+		echo("<p>&nbsp;&nbsp;Status: " . $units[$name]["status"] . "</p>");
+		echo("<p>&nbsp;&nbsp;Last Schedule Poll: " . $units[$name]["lastpoll"] . "</p>");
+	}
+
+?>
