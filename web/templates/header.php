@@ -3,7 +3,7 @@
 //
 //  File: header.php
 //  Date created: 07/29/2018
-//  Date edited: 07/29/2018
+//  Date edited: 08/03/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -14,6 +14,8 @@
 
 function getHeader($title)
 {
+	$version = "0.1.0";
+	
 	$html = <<<HTML
 
 <html>
@@ -27,6 +29,9 @@ function getHeader($title)
 			<div id='header-left'>
 				<img src='res/images/header_394x100.png' />
 			</div> <!-- /header-left -->
+			<div id='header-version'>
+				<p>$version</p>
+			</div> <!-- /header-version -->
 			
 			<div id='header-right'>
 				<a href="http://digitalwarriorlabs.com"><img src='res/images/white_no_title100x100.png'/></a>

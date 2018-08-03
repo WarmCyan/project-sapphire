@@ -3,7 +3,7 @@
 //
 //  File: utility.php
 //  Date created: 07/29/2018
-//  Date edited: 07/29/2018
+//  Date edited: 08/03/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -48,6 +48,31 @@ function getStatsDir()
 	return $configJson['stats_dir'];
 }
 
+function getLastFeedScrape()
+{
+	$timestamp = file_get_contents(getStatsDir() . "scrape_feed_timestamp");
+	$timestamp = convertServerTime($timestamp);
+	return $timestamp;
+}
+
+function getLastContentScrape()
+{
+	$timestamp = file_get_contents(getStatsDir() . "content_feed_timestamp");
+	$timestamp = convertServerTime($timestamp);
+	return $timestamp;
+}
+
+function getArticleContentCount() { return file_get_contents(getStatsDir() . "content_store_dir_filecount"); }
+function getSpaceUtilization() { return file_get_contents(getStatsDir() . "total_filesize"); }
+
+function convertServerTime($serverTime)
+{
+	$timestampDT = date_create_from_format('Y-m-d H:i:s', $serverTime, new DateTimeZone('UTC'));
+	$timestampDT->setTimezone(new DateTimeZone('America/Chicago'));
+	$timestamp = $timestampDT->format('H:i:s (m/d/Y)');
+	return $timestamp;
+}
+
 function getExecutionUnits()
 {
 	$units = array();
@@ -77,10 +102,7 @@ function getExecutionUnits()
 		{
 			// read the content of the file
 			$timestamp = file_get_contents(getStatsDir() . $file);
-			$timestampDT = date_create_from_format('Y-m-d H:i:s', $timestamp, new DateTimeZone('UTC'));
-			$timestampDT->setTimezone(new DateTimeZone('America/Chicago'));
-			$timestamp = $timestampDT->format('H:i:s (m/d/Y)');
-				
+			$timestamp = convertServerTime($timestamp);
  			
 			// store info in array
 			$unitName = $matches[1];

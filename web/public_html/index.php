@@ -3,7 +3,7 @@
 //
 //  File: index.php
 //  Date created: 07/29/2018
-//  Date edited: 07/29/2018
+//  Date edited: 08/03/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -21,8 +21,21 @@ getHeader("Sapphire");
 
 ?>
 
-<h1>Hello World!</h1>
-<p>Lorem ipsum and all that, I say</p>
+<h1>Server Status</h1>
+
+<?php
+
+// get data
+$lastContentScrape = getLastContentScrape();
+$lastFeedScrape = getLastFeedScrape();
+$articleCount = getArticleContentCount();
+$totalSpace = getSpaceUtilization();
+
+?>
+<p>Last content scrape: <?php echo($lastContentScrape); ?></p>
+<p>Last feed scrape: <?php echo($lastFeedScrape); ?></p>
+<p>articles: <?php echo($articleCount); ?></p>
+<p>space: <?php echo($totalSpace); ?></p>
 
 <div id='stats_box'>
 	<h2>Execution Units</h2>
