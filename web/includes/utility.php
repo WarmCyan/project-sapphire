@@ -36,14 +36,18 @@ function readConfig()
 	$configJson = json_decode($configString, true);
 }
 
-function checkLazyLoadConfig() { if (!$configJson) { readConfig(); } }
+function checkLazyLoadConfig() 
+{ 
+	global $configJson;
+	if ($configJson === false) { readConfig(); } 
+}
 
 function getStatsDir()
 {
 	global $configJson;
 	
 	checkLazyLoadConfig();
-	if (!endsWith($configJson, '/')) { $configJson['stats_dir'] .= '/'; }
+	if (!endsWith($configJson['stats_dir'], '/')) { $configJson['stats_dir'] .= '/'; }
 
 	return $configJson['stats_dir'];
 }
@@ -57,7 +61,7 @@ function getLastFeedScrape()
 
 function getLastContentScrape()
 {
-	$timestamp = file_get_contents(getStatsDir() . "content_feed_timestamp");
+	$timestamp = file_get_contents(getStatsDir() . "scrape_content_timestamp");
 	$timestamp = convertServerTime($timestamp);
 	return $timestamp;
 }

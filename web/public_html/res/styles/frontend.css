@@ -29,16 +29,26 @@ body
 	display: block;
 }
 
-#header-left, #header-right
+#header-left, #header-right, #header-version
 {
 	display: block;
 }
 
-#header-left
+#header-left, #header-version
 {
 	float: left;
 	margin-left: 10px;
 }
+
+#header-version
+{
+	font-size: 10pt;
+	color: #555555;
+	margin-top: 62px;
+	padding-bottom: 0px;
+	margin-bottom: 0px !important;
+}
+#header-version p { margin: 0px; }
 
 #header-right
 {

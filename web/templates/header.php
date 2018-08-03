@@ -30,7 +30,7 @@ function getHeader($title)
 				<img src='res/images/header_394x100.png' />
 			</div> <!-- /header-left -->
 			<div id='header-version'>
-				<p>$version</p>
+				<p>v$version</p>
 			</div> <!-- /header-version -->
 			
 			<div id='header-right'>
