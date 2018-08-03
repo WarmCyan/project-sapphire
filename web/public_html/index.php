@@ -21,6 +21,9 @@ getHeader("Sapphire");
 
 ?>
 
+<p><a href="https://github.com/WildfireXIII/project-sapphire">https://github.com/WildfireXIII/project-sapphire</a></p>
+
+
 <h1>Server Status</h1>
 
 <?php

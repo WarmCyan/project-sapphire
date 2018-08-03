@@ -20,6 +20,10 @@ body
 	font-family: DroidSans, Arial;
 	color: white;
 }
+a
+{
+	color: white;
+}
 
 #header
 {
