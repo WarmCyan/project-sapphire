@@ -21,9 +21,11 @@ include_once('../includes/db_connection.php');
 
 
 $articles = array();
-$results = new Connection()->query("SELECT * FROM Articles WHERE content IS NOT NULL ORDER BY timestamp LIMIT 20");
-while ($record = $result->fetch_object()) { array_push($articles, $record); }
+$con = new Connection();
+$results = $con->query("SELECT * FROM Articles WHERE content IS NOT NULL ORDER BY timestamp LIMIT 20");
+while ($record = $results->fetch_object()) { array_push($articles, $record); }
 
+//var_dump($articles);
 
 getHeader("Sapphire");
 
@@ -35,7 +37,8 @@ getHeader("Sapphire");
 
 for ($i = 0; $i < count($articles); $i++)
 {
-	echo("<p>" . $articles[$i]["title"] . "</p>");
+	echo("<h3>" . $articles[$i]->title . "</h3>");
+	echo("<p>" . nl2br($articles[$i]->content) . "</p>");
 }
 
 ?>

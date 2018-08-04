@@ -57,11 +57,11 @@ function getDBConfig()
 	global $configJson;
 	checkLazyLoadConfig();
 
-	$dbParams = [
-		"host":$configJson['db_host'],
-		"user":$configJson['db_user'],
-		"password":$configJson['db_password'],
-		"db":$configJson['db_db']];
+	$dbParams = array(
+		"host"=>$configJson['db_host'],
+		"user"=>$configJson['db_user'],
+		"password"=>$configJson['db_password'],
+		"db"=>$configJson['db_db']);
 
 	return $dbParams;
 }

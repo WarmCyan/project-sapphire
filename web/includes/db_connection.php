@@ -12,7 +12,7 @@
 //
 //***************************************************************************
 
-include_once 'utility.php'
+include_once('utility.php');
 
 class Connection
 {
@@ -22,6 +22,7 @@ class Connection
 	{
 		$params = getDBConfig();
 		$this->connection = new mysqli($params["host"], $params["user"], $params["password"], $params["db"]);
+		mysqli_set_charset($this->connection, "utf8");  
 	}
 	public function query($sql) { return $this->connection->query($sql); }
 }
