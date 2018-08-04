@@ -3,7 +3,7 @@
 //
 //  File: utility.php
 //  Date created: 07/29/2018
-//  Date edited: 08/03/2018
+//  Date edited: 08/04/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -45,12 +45,27 @@ function checkLazyLoadConfig()
 function getStatsDir()
 {
 	global $configJson;
-	
 	checkLazyLoadConfig();
+	
 	if (!endsWith($configJson['stats_dir'], '/')) { $configJson['stats_dir'] .= '/'; }
 
 	return $configJson['stats_dir'];
 }
+
+function getDBConfig()
+{
+	global $configJson;
+	checkLazyLoadConfig();
+
+	$dbParams = [
+		"host":$configJson['db_host'],
+		"user":$configJson['db_user'],
+		"password":$configJson['db_password'],
+		"db":$configJson['db_db']];
+
+	return $dbParams;
+}
+
 
 function getLastFeedScrape()
 {

@@ -21,6 +21,9 @@ getHeader("Sapphire");
 
 ?>
 
+<p><a href="feed.php">Feed</a></p>
+
+
 <p><a href="https://github.com/WildfireXIII/project-sapphire">https://github.com/WildfireXIII/project-sapphire</a></p>
 
 
