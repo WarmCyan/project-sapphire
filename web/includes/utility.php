@@ -58,9 +58,7 @@ function getStatsTimeline()
 {
 	global $configJson;
 	$csv = file_get_contents(getStatsDir() . "space_stats_timeline.csv");
-	$array = array_map("str_getcsv", explode("\n", $csv));
-	$json = json_encode($array);
-	return $json;
+	return $csv;
 }
 
 function getDBConfig()
