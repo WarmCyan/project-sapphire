@@ -3,7 +3,7 @@
 //
 //  File: utility.php
 //  Date created: 07/29/2018
-//  Date edited: 08/04/2018
+//  Date edited: 08/05/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -50,6 +50,17 @@ function getStatsDir()
 	if (!endsWith($configJson['stats_dir'], '/')) { $configJson['stats_dir'] .= '/'; }
 
 	return $configJson['stats_dir'];
+}
+
+// returns a json string
+// thanks to https://stackoverflow.com/questions/28118101/convert-csv-to-json-using-php 
+function getStatsTimeline()
+{
+	global $configJson;
+	$csv = file_get_contents(getStatsDir() . "space_stats_timeline.csv");
+	$array = array_map("str_getcsv", explode("\n", $csv));
+	$json = json_encode($array);
+	return $json;
 }
 
 function getDBConfig()

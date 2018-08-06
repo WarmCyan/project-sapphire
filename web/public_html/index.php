@@ -3,7 +3,7 @@
 //
 //  File: index.php
 //  Date created: 07/29/2018
-//  Date edited: 08/03/2018
+//  Date edited: 08/05/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -36,6 +36,10 @@ $lastContentScrape = getLastContentScrape();
 $lastFeedScrape = getLastFeedScrape();
 $articleCount = getArticleContentCount();
 $totalSpace = getSpaceUtilization();
+
+$statsTimeline = getStatsTimeline();
+
+echo("<script>var data = " . $statsTimeline . ";</script>");
 
 ?>
 <p>Last content scrape: <?php echo($lastContentScrape); ?></p>

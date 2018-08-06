@@ -3,7 +3,7 @@
 //
 //  File: header.php
 //  Date created: 07/29/2018
-//  Date edited: 08/03/2018
+//  Date edited: 08/05/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -14,13 +14,14 @@
 
 function getHeader($title)
 {
-	$version = "0.1.1";
+	$version = "0.1.2";
 	
 	$html = <<<HTML
 
 <html>
 	<head>
 		<link rel='stylesheet' href='res/styles/frontend.css'>
+		<script src="https://d3js.org/d3.v5.min.js"></script>
 		<title>$title</title>
 	</head>
 
