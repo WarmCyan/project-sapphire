@@ -21,7 +21,7 @@ function getHeader($title)
 <html>
 	<head>
 		<link rel='stylesheet' href='res/styles/frontend.css'>
-		<script src="https://d3js.org/d3.v5.min.js"></script>
+		<script src="https://d3js.org/d3.v4.min.js"></script>
 		<title>$title</title>
 	</head>
 
