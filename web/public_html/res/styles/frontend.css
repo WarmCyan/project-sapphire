@@ -73,3 +73,23 @@ a
 	background-color: #CCCCCC;
 	color: #111122;
 }
+
+
+.axis path, .axis line
+{
+	fill: none;
+	stroke: #444;
+	shape-rendering: crispEdges;
+}
+
+.axis text
+{
+	fill: #DDDDDD;
+}
+
+.axisLabel
+{
+	fill: #EEEEEE;
+	font: 12px sans-serif;
+}
+

@@ -3,7 +3,7 @@
 //
 //  File: index.php
 //  Date created: 07/29/2018
-//  Date edited: 08/05/2018
+//  Date edited: 08/07/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -70,7 +70,7 @@ $totalSpace = getSpaceUtilization();
 <script>
 
 var svg = d3.select("#graph");
-var margin = {top: 20, right: 20, bottom: 20, left: 50};
+var margin = {top: 20, right: 20, bottom: 30, left: 50};
 var width = +svg.attr("width") - margin.left - margin.right;
 var height = +svg.attr("height") - margin.top - margin.bottom;
 var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -105,19 +105,28 @@ d3.csv("spacestatstimeline.php", function(d) {
 
 	g.append("g")
 		.attr("transform", "translate(0," + height + ")")
-		.call(d3.axisBottom(x))
-		.select(".domain")
-		.remove();
+		.attr("class", "axis")
+		.call(d3.axisBottom(x).tickFormat(d3.timeFormat("%-m/%-d")))
+		//.select(".domain")
+		.append("text")
+		.attr("class", "axisLabel")
+		.attr("y", 25)
+		//.attr("dy", ".5em")
+		.attr("x", (width / 2))
+		.text("Date");
+		
 
 	g.append("g")
+		.attr("class", "axis")
 		.call(d3.axisLeft(y))
 		.append("text")
-		.attr("fill", "#000")
+		.attr("class", "axisLabel")
 		.attr("transform", "rotate(-90)")
-		.attr("y", 6)
-		.attr("dy", "0.71em")
-		.attr("text-anchor", "end")
-		.text("Value");
+		.attr("y", 0 - margin.left)
+		.attr("dy", "1em")
+		.attr("x", 0 - (height / 2))
+		.attr("text-anchor", "middle")
+		.text("Article Count");
 
 	g.append("path")
 		.datum(data)
