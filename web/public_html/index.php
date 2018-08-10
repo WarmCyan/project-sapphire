@@ -93,7 +93,7 @@ d3.csv("spacestatstimeline.php", function(d) {
 	//d.content_store_dir_filecount = +d.content_store_dir_filecount;
 	//return d;
 	return {
-		date: parseTime(d.time),
+		date: d3.timeDay.floor(parseTime(d.time)),
 			value: +d.content_store_dir_filecount
 	};
 
@@ -142,8 +142,8 @@ d3.csv("spacestatstimeline.php", function(d) {
 		.data(data)
 		.enter().append("circle")
 			.attr("class", "dot")
-			.attr("cx", function(d, i) { return x(i); })
-			.attr("cy", function(d) { return y(d.y); })
+			.attr("cx", function(d) { return x(d.date); })
+			.attr("cy", function(d) { return y(d.value); })
 			.attr("r", 4);
 });
 
