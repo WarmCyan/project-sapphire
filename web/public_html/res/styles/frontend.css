@@ -15,7 +15,7 @@
 
 body
 {
-	background-color: #212128;
+	background-color: #0F0F0F;
 	margin: 0px;
 	font-family: DroidSans, Arial;
 	color: white;
@@ -91,5 +91,10 @@ a
 {
 	fill: #EEEEEE;
 	font: 12px sans-serif;
+}
+
+.dot
+{
+	fill: steelblue;
 }
 

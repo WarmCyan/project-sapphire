@@ -3,7 +3,7 @@
 //
 //  File: index.php
 //  Date created: 07/29/2018
-//  Date edited: 08/07/2018
+//  Date edited: 08/09/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -136,6 +136,15 @@ d3.csv("spacestatstimeline.php", function(d) {
 		.attr("stroke-linecap", "round")
 		.attr("stroke-width", 1.5)
 		.attr("d", line);	
+
+
+	g.selectAll(".dot")
+		.data(data)
+		.enter().append("circle")
+			.attr("class", "dot")
+			.attr("cx", function(d, i) { return x(i); })
+			.attr("cy", function(d) { return y(d.y); })
+			.attr("r", 4);
 });
 
 </script>
