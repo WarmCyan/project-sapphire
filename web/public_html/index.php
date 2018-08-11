@@ -161,7 +161,7 @@ d3.csv("spacestatstimeline.php", function(d) {
 				tip.transition()
 					.duration(100)
 					.style("opacity", "0");
-			}
+			});
 });
 
 </script>
