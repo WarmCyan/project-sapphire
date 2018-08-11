@@ -3,7 +3,7 @@
 //
 //  File: index.php
 //  Date created: 07/29/2018
-//  Date edited: 08/09/2018
+//  Date edited: 08/11/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -86,6 +86,10 @@ var y = d3.scaleLinear()
 var line = d3.line()
     .x(function(d) { return x(d.date); })
     .y(function(d) { return y(d.value); });
+
+var tip = d3.select("body").append("div")	
+    .attr("class", "tooltip")				
+    .style("opacity", 0);
 	
 d3.csv("spacestatstimeline.php", function(d) {
 	console.log(d);
@@ -144,7 +148,20 @@ d3.csv("spacestatstimeline.php", function(d) {
 			.attr("class", "dot")
 			.attr("cx", function(d) { return x(d.date); })
 			.attr("cy", function(d) { return y(d.value); })
-			.attr("r", 4);
+			.attr("r", 4)
+			.on("mouseover", function(d) {
+				tip.transition()
+					.duration(100)
+					.style('opacity', '.9');
+				tip.html(d.date + "</br>" + d.value)
+					.style("left", (d3.event.pageX) + "px")
+					.style("top", (d3.event.pageY) + "px");
+			})
+			.on("mouseout", function(d) {
+				tip.transition()
+					.duration(100)
+					.style("opacity", "0");
+			}
 });
 
 </script>

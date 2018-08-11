@@ -98,3 +98,12 @@ a
 	fill: steelblue;
 }
 
+.tooltip
+{
+	background-color: #333333;
+	position: absolute;
+	text-align: center;
+	width: 100px;
+	padding: 10px;
+	color: #FFFFFF;
+}
