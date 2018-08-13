@@ -3,7 +3,7 @@
 //
 //  File: index.php
 //  Date created: 07/29/2018
-//  Date edited: 08/11/2018
+//  Date edited: 08/12/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -90,6 +90,7 @@ var line = d3.line()
 var tip = d3.select("body").append("div")	
     .attr("class", "tooltip")				
     .style("opacity", 0);
+
 	
 d3.csv("spacestatstimeline.php", function(d) {
 	console.log(d);
@@ -107,6 +108,7 @@ d3.csv("spacestatstimeline.php", function(d) {
 	x.domain(d3.extent(data, function(d) { return d.date; }));
 	y.domain(d3.extent(data, function(d) { return d.value; }));
 
+	// x axis
 	g.append("g")
 		.attr("transform", "translate(0," + height + ")")
 		.attr("class", "axis")
@@ -119,7 +121,7 @@ d3.csv("spacestatstimeline.php", function(d) {
 		.attr("x", (width / 2))
 		.text("Date");
 		
-
+	// y axis
 	g.append("g")
 		.attr("class", "axis")
 		.call(d3.axisLeft(y))
@@ -131,6 +133,24 @@ d3.csv("spacestatstimeline.php", function(d) {
 		.attr("x", 0 - (height / 2))
 		.attr("text-anchor", "middle")
 		.text("Article Count");
+
+	// x axis grid lines
+	g.append("g")
+		.attr("class", "grid")
+		.attr("transform", "translate(0,"+height+")")
+		.call(d3.axisBottom(x)
+			.ticks(10)
+			.tickSize(-height)
+			.tickFormat(""));
+	 
+	// y axis grid lines
+	g.append("g")
+		.attr("class", "grid")
+		//.attr("transform", "translate(0,"+height+")")
+		.call(d3.axisBottom(y)
+			.ticks(10)
+			.tickSize(-width)
+			.tickFormat(""));
 
 	g.append("path")
 		.datum(data)

@@ -3,7 +3,7 @@
 //
 //  File: header.php
 //  Date created: 07/29/2018
-//  Date edited: 08/11/2018
+//  Date edited: 08/12/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -14,7 +14,7 @@
 
 function getHeader($title)
 {
-	$version = "0.1.4";
+	$version = "0.1.5";
 	
 	$html = <<<HTML
 
