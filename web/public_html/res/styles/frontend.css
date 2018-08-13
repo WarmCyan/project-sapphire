@@ -96,6 +96,7 @@ a
 .dot
 {
 	fill: steelblue;
+	z-index: 599;
 }
 
 .tooltip
@@ -106,13 +107,26 @@ a
 	width: 100px;
 	padding: 10px;
 	color: #FFFFFF;
+	z-index: 500;
 }
 
 .grid line
 {
-	stroke: #555555;
+	stroke: #333333;
 	stroke-opacity: 0.7;
 	shape-rendering: crispEdges;
 }
 
 .grid path { stroke-width: 0; }
+
+.graph
+{
+	border: 1px solid #555555;
+	background-color: #171717;
+}
+
+.title
+{
+	font-size: 16px;
+	fill: #EEEEEE;
+}

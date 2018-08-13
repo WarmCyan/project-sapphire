@@ -46,7 +46,7 @@ $totalSpace = getSpaceUtilization();
 
 
 
-<svg id="graph" width="960", height="500"></svg>
+<svg class="graph" width="960", height="500"></svg>
 </br>
 </br>
 
@@ -69,8 +69,8 @@ $totalSpace = getSpaceUtilization();
 
 <script>
 
-var svg = d3.select("#graph");
-var margin = {top: 20, right: 20, bottom: 30, left: 50};
+var svg = d3.select(".graph");
+var margin = {top: 50, right: 30, bottom: 50, left: 60};
 var width = +svg.attr("width") - margin.left - margin.right;
 var height = +svg.attr("height") - margin.top - margin.bottom;
 var g = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -91,6 +91,14 @@ var tip = d3.select("body").append("div")
     .attr("class", "tooltip")				
     .style("opacity", 0);
 
+// title
+svg.append("text")
+	.attr("x", ((width + margin.left + margin.top) / 2))             
+	//.attr("y", 0 - (margin.top / 2))
+	.attr("y", 0 + (margin.top / 2))
+	.attr("text-anchor", "middle")  
+	.attr("class", "title")  
+	.text("Article Count over Time");
 	
 d3.csv("spacestatstimeline.php", function(d) {
 	console.log(d);
@@ -115,24 +123,24 @@ d3.csv("spacestatstimeline.php", function(d) {
 		.call(d3.axisBottom(x).tickFormat(d3.timeFormat("%-m/%-d")))
 		//.select(".domain")
 		.append("text")
-		.attr("class", "axisLabel")
-		.attr("y", 25)
-		//.attr("dy", ".5em")
-		.attr("x", (width / 2))
-		.text("Date");
+			.attr("class", "axisLabel")
+			.attr("y", 25)
+			.attr("dy", ".7em")
+			.attr("x", (width / 2))
+			.text("Date");
 		
 	// y axis
 	g.append("g")
 		.attr("class", "axis")
 		.call(d3.axisLeft(y))
 		.append("text")
-		.attr("class", "axisLabel")
-		.attr("transform", "rotate(-90)")
-		.attr("y", 0 - margin.left)
-		.attr("dy", "1em")
-		.attr("x", 0 - (height / 2))
-		.attr("text-anchor", "middle")
-		.text("Article Count");
+			.attr("class", "axisLabel")
+			.attr("transform", "rotate(-90)")
+			.attr("y", 0 - margin.left)
+			.attr("dy", "1.5em")
+			.attr("x", 0 - (height / 2))
+			.attr("text-anchor", "middle")
+			.text("Article Count");
 
 	// x axis grid lines
 	g.append("g")
@@ -147,11 +155,12 @@ d3.csv("spacestatstimeline.php", function(d) {
 	g.append("g")
 		.attr("class", "grid")
 		//.attr("transform", "translate(0,"+height+")")
-		.call(d3.axisBottom(y)
+		.call(d3.axisLeft(y)
 			.ticks(10)
 			.tickSize(-width)
 			.tickFormat(""));
 
+	// graph line
 	g.append("path")
 		.datum(data)
 		.attr("fill", "none")
@@ -161,7 +170,7 @@ d3.csv("spacestatstimeline.php", function(d) {
 		.attr("stroke-width", 1.5)
 		.attr("d", line);	
 
-
+	// graph points
 	g.selectAll(".dot")
 		.data(data)
 		.enter().append("circle")
