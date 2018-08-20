@@ -75,31 +75,31 @@ a
 }
 
 
-.axis path, .axis line
+.graphAxis path, .graphAxis line
 {
 	fill: none;
 	stroke: #444;
 	shape-rendering: crispEdges;
 }
 
-.axis text
+.graphAxis text
 {
 	fill: #DDDDDD;
 }
 
-.axisLabel
+.graphAxisLabel
 {
 	fill: #EEEEEE;
 	font: 12px sans-serif;
 }
 
-.dot
+.graphDot
 {
 	fill: steelblue;
 	z-index: 599;
 }
 
-.tooltip
+.graphTooltip
 {
 	background-color: #333333;
 	position: absolute;
@@ -110,14 +110,14 @@ a
 	z-index: 500;
 }
 
-.grid line
+.graphGrid line
 {
 	stroke: #333333;
 	stroke-opacity: 0.7;
 	shape-rendering: crispEdges;
 }
 
-.grid path { stroke-width: 0; }
+.graphGrid path { stroke-width: 0; }
 
 .graph
 {
@@ -125,7 +125,7 @@ a
 	background-color: #171717;
 }
 
-.title
+.graphTitle
 {
 	font-size: 16px;
 	fill: #EEEEEE;

@@ -3,7 +3,7 @@
 //
 //  File: header.php
 //  Date created: 07/29/2018
-//  Date edited: 08/12/2018
+//  Date edited: 08/19/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -14,7 +14,7 @@
 
 function getHeader($title)
 {
-	$version = "0.1.5";
+	$version = "0.1.6";
 	
 	$html = <<<HTML
 
@@ -22,6 +22,7 @@ function getHeader($title)
 	<head>
 		<link rel='stylesheet' href='res/styles/frontend.css'>
 		<script src="https://d3js.org/d3.v4.min.js"></script>
+		<script src="res/scripts/singlelinechart.js"></script>
 		<title>$title</title>
 	</head>
 

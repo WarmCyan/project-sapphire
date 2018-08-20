@@ -3,7 +3,7 @@
 //
 //  File: index.php
 //  Date created: 07/29/2018
-//  Date edited: 08/12/2018
+//  Date edited: 08/19/2018
 //
 //  Author: Nathan Martindale
 //  Copyright © 2018 Digital Warrior Labs
@@ -46,7 +46,7 @@ $totalSpace = getSpaceUtilization();
 
 
 
-<svg class="graph" width="960", height="500"></svg>
+<svg id="articlecount" class="graph" width="960", height="500"></svg>
 </br>
 </br>
 
@@ -69,6 +69,9 @@ $totalSpace = getSpaceUtilization();
 
 <script>
 
+drawSingleLineTimeChart("articlecount", "spacestatstimeline.php", "time", "content_store_dir_filecount", "Article count over Time", "Article Count");
+
+/*
 var svg = d3.select(".graph");
 var margin = {top: 50, right: 30, bottom: 50, left: 60};
 var width = +svg.attr("width") - margin.left - margin.right;
@@ -192,7 +195,7 @@ d3.csv("spacestatstimeline.php", function(d) {
 					.style("opacity", "0");
 			});
 });
-
+ */
 </script>
 
 <?php getFooter(); ?>
