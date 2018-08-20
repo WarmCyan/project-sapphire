@@ -14,7 +14,7 @@
 function drawSingleLineTimeChart(id, dataurl, datecolname, valcolname, title, vallabel, margin={top: 50, right: 30, bottom: 50, left: 60})
 {
 	// get the element
-	var svg = d3.select(id);
+	var svg = d3.select("#" + id);
 	
 	// determine graph height and width
 	var width = +svg.attr("width") - margin.left - margin.right;
@@ -32,7 +32,7 @@ function drawSingleLineTimeChart(id, dataurl, datecolname, valcolname, title, va
 
 	// define the line's points from the data
 	var line = d3.line()
-		.x(function(d) { return x(d.date); });
+		.x(function(d) { return x(d.date); })
 		.y(function(d) { return y(d.value); });
 
 	// set up the tooltip
